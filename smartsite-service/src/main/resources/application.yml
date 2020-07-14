@@ -1,0 +1,9 @@
+#Note: YML file is also a config file, almost equivalent to application.properties files with different coding regulations
+# If both of the files have one identical setting, the program will select the one in application.properties file.
+
+#Config external resource directories:
+#spring:
+#  mvc:
+#    static-path-pattern: /external/**
+#  resources:
+#    static-locations: file:E://uploadFiles/

@@ -1,0 +1,7 @@
+# This is a yml file named bootstrap, which has equivalent function to application.yml file but load earlier
+# The choice of yml and application file is merely a matter of habit. Both will do.
+# The bootstrap file typically stores the name of the service which will be used in configuration-service and eureka, etc
+
+#spring:
+#  application:
+#    name: ai-alert-service
