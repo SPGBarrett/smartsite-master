@@ -1,7 +1,19 @@
 package com.barrett.zuulgateway.config;
 
+
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -11,8 +23,19 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.DocumentationCache;
+import springfox.documentation.spring.web.json.Json;
+import springfox.documentation.spring.web.json.JsonSerializer;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.ApiResourceController;
+import springfox.documentation.swagger.web.SecurityConfiguration;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
+import springfox.documentation.swagger2.web.Swagger2Controller;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +48,8 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    private static final String DEFAULT_PATH="gateway";
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -48,12 +73,13 @@ public class SwaggerConfig {
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("测试API文档")
-                .description("xxx公司 Copyright 2000-2030 (C) All Rights Reserved.")
-                .termsOfServiceUrl("http://www.gary.cn/")
-                .contact(new Contact("gary",null,"gary@163.com"))
+                .title("智慧工地后台API文档集合")
+                .description("Barrett Zhou Copyright 2000-2030 (C) All Rights Reserved.")
+                .termsOfServiceUrl("https://github.com/SPGBarrett")
+                .contact(new Contact("Barrett",null,"spg_barrett@live.cn"))
                 .version("1.0")
                 .build();
     }
+
 }
 

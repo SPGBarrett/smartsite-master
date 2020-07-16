@@ -30,7 +30,8 @@ public class MultiDocConfig implements SwaggerResourcesProvider {
          */
         resources.add(swaggerResource("AI-Alert-Service", "/zb-api/ai-alert-service/v2/api-docs", "2.0"));
         resources.add(swaggerResource("Face-Detect-Service", "/zb-api/face-detect-service/v2/api-docs", "2.0"));
-
+        resources.add(swaggerResource("smartsite-service", "/zb-api/smartsite-service/v2/api-docs", "2.0"));
+        resources.add(swaggerResource("patrolmodule-service", "/zb-api/patrolmodule-service/v2/api-docs", "2.0"));
         return resources;
     }
 

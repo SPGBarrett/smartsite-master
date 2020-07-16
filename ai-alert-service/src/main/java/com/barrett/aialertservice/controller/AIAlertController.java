@@ -52,6 +52,8 @@ public class AIAlertController {
     String vestLogFileLocation;
     @Value("${ai.detect.clothes.log.path}")
     String clotheLogFileLocation;
+    @Value("${ai.detect.helmet.log.path}")
+    String helmetLogFileLocation;
 
     // Insert one line of data:
     @RequestMapping(value = {"/HelmetAlert"}, method = {RequestMethod.POST})
@@ -63,52 +65,48 @@ public class AIAlertController {
 
     @RequestMapping(value = {"/HelmetAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushHelmet(@RequestBody HelmetAlertInfoInput helmetAlertInfoInput) {
-        System.out.println(new Date());
-        System.out.println(helmetAlertInfoInput);
-        // Save data to database:
-        AIAlertPushMsg thisMsg = helmetAlertInfoService.insertHelmetAlertData(helmetAlertInfoInput);
         try{
+            System.out.println(new Date());
+            System.out.println(helmetAlertInfoInput);
+            // Save data to database:
+            AIAlertPushMsg thisMsg = helmetAlertInfoService.insertHelmetAlertData(helmetAlertInfoInput);
             alertPushService.pushHelmetAlertMsg(thisMsg);
+            return thisMsg;
         }catch (Exception e){
             System.out.println("推送预警消息失败！");
+            return null;
         }
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                alertPushService.pushAlertMsg(thisMsg);
-//            }
-//        }).start();
-        return thisMsg;
     }
 
     @RequestMapping(value = {"/VestAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushVest(@RequestBody VestAlertInfoInput vestAlertInfoInput) {
-        System.out.println(new Date());
-        System.out.println(vestAlertInfoInput);
-        // Save data to database:
-        AIAlertPushMsg thisMsg = vestAlertInfoService.insertVestAlertData(vestAlertInfoInput);
         try{
+            System.out.println(new Date());
+            System.out.println(vestAlertInfoInput);
+            // Save data to database:
+            AIAlertPushMsg thisMsg = vestAlertInfoService.insertVestAlertData(vestAlertInfoInput);
             alertPushService.pushClothesAlertMsg(thisMsg);
+            return thisMsg;
         }catch (Exception e){
             System.out.println("推送预警消息失败！");
+            return null;
         }
-        return thisMsg;
     }
 
     @RequestMapping(value = {"/ClothesAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushClothes(@RequestBody ClothesAlertInfoInput clothesAlertInfoInput) {
-        System.out.println(new Date());
-        System.out.println(clothesAlertInfoInput);
-        // Save data to database:
-        AIAlertPushMsg thisMsg = clothesAlertInfoService.insertClothesAlertData(clothesAlertInfoInput);
         try{
+            System.out.println(new Date());
+            System.out.println(clothesAlertInfoInput);
+            // Save data to database:
+            AIAlertPushMsg thisMsg = clothesAlertInfoService.insertClothesAlertData(clothesAlertInfoInput);
             alertPushService.pushClothesAlertMsg(thisMsg);
+            return thisMsg;
         }catch (Exception e){
             System.out.println("推送预警消息失败！");
+            return null;
         }
-        return thisMsg;
     }
-
 
 
     // Restful API availability test:
@@ -128,7 +126,7 @@ public class AIAlertController {
         return "This is a test from port: " + currentPort;
     }
 
-    // Restful API availability test:
+    // Restful API availability test for clothes:
     @RequestMapping(value = {"/test3"}, method = {RequestMethod.POST})
     public String test23(@RequestBody String strJson) {
         File logFile = new File(clotheLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
@@ -143,10 +141,25 @@ public class AIAlertController {
         return "This is a test from port: " + currentPort;
     }
 
-    // Restful API availability test:
+    // Restful API availability test for vest:
     @RequestMapping(value = {"/test4"}, method = {RequestMethod.POST})
     public String test24(@RequestBody String strJson) {
         File logFile = new File(vestLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
+        FileWriter fw;
+        try {
+            fw = new FileWriter(logFile);
+            fw.write(strJson);//将字符串写入到指定的路径下的文件中
+            fw.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return "This is a test from port: " + currentPort;
+    }
+
+    // Restful API availability test for helmet
+    @RequestMapping(value = {"/test5"}, method = {RequestMethod.POST})
+    public String test25(@RequestBody String strJson) {
+        File logFile = new File(helmetLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
         FileWriter fw;
         try {
             fw = new FileWriter(logFile);
