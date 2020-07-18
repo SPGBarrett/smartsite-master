@@ -48,10 +48,10 @@ public class SwaggerConfig {
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("测试API文档")
-                .description("xxx Copyright 2000-2030 (C) All Rights Reserved.")
-                .termsOfServiceUrl("http://www.xxx.cn/")
-                .contact(new Contact("xxx",null,"xxx@163.com"))
+                .title("智慧AI后台API文档集合")
+                .description("Barrett Zhou Copyright 2000-2030 (C) All Rights Reserved.")
+                .termsOfServiceUrl("https://github.com/SPGBarrett")
+                .contact(new Contact("Barrett",null,"spg_barrett@live.cn"))
                 .version("1.0")
                 .build();
     }

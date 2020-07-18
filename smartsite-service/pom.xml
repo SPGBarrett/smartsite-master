@@ -75,13 +75,7 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.8.0-alpha2</version>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
+
         <!-- springboot- aspect oriented programming dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -113,6 +107,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <!-- SwaggerUI dependencies -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
         </dependency>
     </dependencies>
     <build>

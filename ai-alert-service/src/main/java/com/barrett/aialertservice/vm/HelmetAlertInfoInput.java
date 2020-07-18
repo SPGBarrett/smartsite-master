@@ -10,6 +10,7 @@ import java.util.List;
  * @author: Barrett
  * @create: 2020-05-05 13:59
  **/
+
 public class HelmetAlertInfoInput {
     String aid; //算法id
     String cid; //摄像头id
@@ -120,7 +121,6 @@ public class HelmetAlertInfoInput {
 
 
     public static class Heads{
-        long timeStamp; //时间戳
         int numOfHead; //检测到未戴安全帽的数量
         int alertFlag;
         List<HeadDetail> headInfo;
@@ -128,19 +128,10 @@ public class HelmetAlertInfoInput {
         public Heads() {
         }
 
-        public Heads(long timeStamp, int numOfHead, int alertFlag, List<HeadDetail> headInfo) {
-            this.timeStamp = timeStamp;
+        public Heads(int numOfHead, int alertFlag, List<HeadDetail> headInfo) {
             this.numOfHead = numOfHead;
             this.alertFlag = alertFlag;
             this.headInfo = headInfo;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-
-        public void setTimeStamp(long timeStamp) {
-            this.timeStamp = timeStamp;
         }
 
         public int getNumOfHead() {
