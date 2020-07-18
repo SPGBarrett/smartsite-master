@@ -1,6 +1,7 @@
 package com.barrett.smartsite.controller;
 
 import com.barrett.smartsite.factory.FileUtil;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import java.io.FileNotFoundException;
  **/
 @RestController
 @RequestMapping("video")
+@Api(tags = {"出发多媒体文件转码的接口"})
 public class VideoFormatConvertController {
     @Autowired
     FileUtil fileUtil;

@@ -3,6 +3,8 @@ import com.barrett.smartsite.bean.MapScreenSetting;
 import com.barrett.smartsite.controller.MapScreenSettingController;
 import com.barrett.smartsite.service.MapScreenSettingService;
 import java.util.List;
+
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"工地一张图参数设置接口"})
 public class MapScreenSettingController {
     @Autowired
     MapScreenSettingService mapScreenSettingService;
