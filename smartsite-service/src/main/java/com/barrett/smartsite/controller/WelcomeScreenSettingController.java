@@ -6,6 +6,7 @@ import com.barrett.smartsite.service.WelcomeScreenSettingService;
 
 import java.util.List;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"欢迎页面参数设置的接口"})
 public class WelcomeScreenSettingController {
     @Autowired
     WelcomeScreenSettingService welcomeScreenSettingService;

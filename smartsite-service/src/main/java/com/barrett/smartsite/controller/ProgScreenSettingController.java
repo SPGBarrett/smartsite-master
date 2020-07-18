@@ -7,6 +7,7 @@ import com.barrett.smartsite.bean.ProgScreenSettingParams;
 import com.barrett.smartsite.service.MainScreenSettingService;
 import com.barrett.smartsite.service.ProgScreenSettingService;
 import com.barrett.smartsite.service.ScreenInfoService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"程序定时播放模板参数设置的接口"})
 public class ProgScreenSettingController {
 
     @Autowired

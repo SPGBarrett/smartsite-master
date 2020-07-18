@@ -1,4 +1,4 @@
-package com.barrett.aialertservice.config;
+package com.barrett.smartsite.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +13,15 @@ import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @program: smartsite-master
- * @description: Configuration of swagger UI
+ * @description: Configuration class for swagger ui
  * @author: Barrett
- * @create: 2020-07-02 10:25
+ * @create: 2020-07-17 08:26
  **/
 @Configuration
 @EnableSwagger2
@@ -48,7 +49,7 @@ public class SwaggerConfig {
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("智慧AI后台API文档集合")
+                .title("智慧工地工地大屏后台API文档集合")
                 .description("Barrett Zhou Copyright 2000-2030 (C) All Rights Reserved.")
                 .termsOfServiceUrl("https://github.com/SPGBarrett")
                 .contact(new Contact("Barrett",null,"spg_barrett@live.cn"))
@@ -56,4 +57,3 @@ public class SwaggerConfig {
                 .build();
     }
 }
-

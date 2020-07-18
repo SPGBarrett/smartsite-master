@@ -7,6 +7,7 @@ import com.barrett.smartsite.service.MultiFilesService;
 import java.util.List;
 
 import com.barrett.smartsite.service.MultiScreenSettingService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"多媒体文件增删查接口"})
 public class MultiFilesController {
     @Autowired
     MultiFilesService multiFilesService;

@@ -6,6 +6,7 @@ import com.barrett.smartsite.service.MainScreenSettingService;
 
 import java.util.List;
 
+import io.swagger.annotations.Api;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"主屏幕参数设置接口"})
 public class MainScreenSettingController {
     @Autowired
     MainScreenSettingService mainScreenSettingService;

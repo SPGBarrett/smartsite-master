@@ -10,6 +10,7 @@ import com.barrett.smartsite.vm.TextScreenTotal;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"文字显示页面参数设置的接口"})
 public class TextScreenController {
     @Autowired
     TextScreenSettingService textScreenSettingService;

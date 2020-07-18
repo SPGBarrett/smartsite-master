@@ -9,6 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +33,7 @@ import javax.swing.*;
 @CrossOrigin
 @RestController
 @RequestMapping({"/SiteScreenParams"})
+@Api(tags = {"多媒体文件上传的接口"})
 public class FileUploadController {
     @Autowired
     FileUploadService fileUploadService;
@@ -46,6 +51,10 @@ public class FileUploadController {
     public final String FILE_PARENT_WELCOME = "欢迎界面";
     public final String FILE_PARENT_MULTI = "多媒体界面";
 
+    @ApiOperation(value = "上传欢迎页面多媒体文件", notes="上传欢迎页面多媒体文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "多媒体文件", dataType = "MultipartFile", paramType = "body", required = true)
+    })
     @RequestMapping(value = {"/UploadWelcomeFile"}, method = {RequestMethod.POST})
     public String uploadWelcomeFile(@RequestParam("file") MultipartFile file) {
         clearHistoryData();
@@ -91,6 +100,10 @@ public class FileUploadController {
 
     // ****The one in use !!! *********************
     // Upload common multimedia files
+    @ApiOperation(value = "上传多媒体文件", notes="上传多媒体文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
+    })
     @RequestMapping(value = {"/UploadFiles"}, method = {RequestMethod.POST})
     public String uploadFiles(@RequestParam("files") MultipartFile[] files) {
         // Loop and upload files:
@@ -105,6 +118,10 @@ public class FileUploadController {
     }
 
     // Upload welcome screen related media files:
+    @ApiOperation(value = "上传欢迎页面多媒体文件", notes="上传欢迎页面多媒体文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
+    })
     @RequestMapping(value = {"/UploadWelcomeFiles"}, method = {RequestMethod.POST})
     public String uploadWelcomeFiles(@RequestParam("files") MultipartFile[] files) {
         String result = "";
@@ -116,6 +133,10 @@ public class FileUploadController {
     }
 
     // Upload party home related media files:
+    @ApiOperation(value = "上传党建家页面多媒体文件", notes="上传党建家页面多媒体文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
+    })
     @RequestMapping(value = {"/UploadPartyHomeFiles"}, method = {RequestMethod.POST})
     public String uploadPartyHomeFiles(@RequestParam("files") MultipartFile[] files) {
         String result = "";
