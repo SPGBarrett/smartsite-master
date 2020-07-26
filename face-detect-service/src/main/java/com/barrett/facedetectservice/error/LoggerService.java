@@ -24,14 +24,14 @@ public class LoggerService {
     private final String LOG_FILE_NAME = "FaceDetectAPILog.txt";
 
     /**
-    * @Description: Write log info to file
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public void writeLogFile(String methodName, String inputMsg, String responseMsg){
-        try{
+     * @Description: Write log info to file
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void writeLogFile(String methodName, String inputMsg, String responseMsg) {
+        try {
             Date currentDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String currentDateInDate = sdf.format(currentDate);
@@ -41,15 +41,15 @@ public class LoggerService {
             File file = new File(fileName);
             FileOutputStream fos = null;
             // Check folder exist:
-            if(!folder.exists()){
+            if (!folder.exists()) {
                 folder.mkdirs();
             }
             // Check file:
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
                 fos = new FileOutputStream(file);
-            }else{
-                fos = new FileOutputStream(file,true);
+            } else {
+                fos = new FileOutputStream(file, true);
             }
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -62,7 +62,7 @@ public class LoggerService {
             sb.append(responseMsg + "\n");
             osw.write(sb.toString() + "\n");
             osw.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

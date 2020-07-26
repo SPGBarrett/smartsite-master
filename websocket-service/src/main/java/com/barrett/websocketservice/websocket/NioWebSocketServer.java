@@ -15,22 +15,23 @@ import org.slf4j.LoggerFactory;
  **/
 public class NioWebSocketServer {
     private static final Logger logger = LoggerFactory.getLogger(NioWebSocketServer.class);
-    private void init(){
+
+    private void init() {
         logger.info("正在启动websocket服务器");
-        NioEventLoopGroup boss=new NioEventLoopGroup();
-        NioEventLoopGroup work=new NioEventLoopGroup();
+        NioEventLoopGroup boss = new NioEventLoopGroup();
+        NioEventLoopGroup work = new NioEventLoopGroup();
         try {
-            ServerBootstrap bootstrap=new ServerBootstrap();
-            bootstrap.group(boss,work);
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(boss, work);
             bootstrap.channel(NioServerSocketChannel.class);
             bootstrap.childHandler(new NioWebSocketChannelInitializer());
             Channel channel = bootstrap.bind(8081).sync().channel();
-            logger.info("webSocket服务器启动成功："+channel);
+            logger.info("webSocket服务器启动成功：" + channel);
             channel.closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            logger.info("运行出错："+e);
-        }finally {
+            logger.info("运行出错：" + e);
+        } finally {
             boss.shutdownGracefully();
             work.shutdownGracefully();
             logger.info("websocket服务器已关闭");

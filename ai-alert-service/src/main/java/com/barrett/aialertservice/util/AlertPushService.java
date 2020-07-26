@@ -31,17 +31,17 @@ public class AlertPushService {
     private String PUSH_CLOTHES_URL;
 
     /**
-    * @Description: Push msg to alert manage server
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public String pushHelmetAlertMsg(AIAlertPushMsg pushMsg){
+     * @Description: Push msg to alert manage server
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public String pushHelmetAlertMsg(AIAlertPushMsg pushMsg) {
 
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
-        try{
+        try {
             HttpHeaders requestHeader = new HttpHeaders();
             requestHeader.setContentType(MediaType.APPLICATION_JSON);
             //body
@@ -59,7 +59,7 @@ public class AlertPushService {
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(PUSH_HELMET_URL, requestEntity, String.class);
             responseBody = responseEntity.getBody();
             System.out.println(responseBody);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
@@ -73,11 +73,11 @@ public class AlertPushService {
      * @Author: Barrett
      * @Date:
      */
-    public String pushClothesAlertMsg(AIAlertPushMsg pushMsg){
+    public String pushClothesAlertMsg(AIAlertPushMsg pushMsg) {
 
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
-        try{
+        try {
             HttpHeaders requestHeader = new HttpHeaders();
             requestHeader.setContentType(MediaType.APPLICATION_JSON);
             //body
@@ -95,7 +95,7 @@ public class AlertPushService {
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(PUSH_CLOTHES_URL, requestEntity, String.class);
             responseBody = responseEntity.getBody();
             System.out.println(responseBody);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }

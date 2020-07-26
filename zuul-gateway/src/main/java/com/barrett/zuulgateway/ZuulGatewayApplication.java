@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy

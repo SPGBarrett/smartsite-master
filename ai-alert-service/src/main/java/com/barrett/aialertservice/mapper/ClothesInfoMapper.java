@@ -5,6 +5,7 @@ import com.barrett.aialertservice.bean.HeadInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface ClothesInfoMapper {
     @Insert({"INSERT INTO clothes_info(id,guid,parent_id,x,y,width,height) VALUES (#{id},#{guid},#{parent_id},#{x},#{y},#{width},#{height})"})

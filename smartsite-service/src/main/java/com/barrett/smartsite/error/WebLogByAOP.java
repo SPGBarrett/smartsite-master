@@ -57,7 +57,7 @@ public class WebLogByAOP {
             public void run() {
                 try {
                     String operType = request.getMethod();
-                    String operDesc =  request.getRequestURL().toString();
+                    String operDesc = request.getRequestURL().toString();
                     OperateLogRequestBody operateLogRequestBody = loggerService.constructDefaultOperateLogData("管理员", "spc-screen", operType, operDesc);
                     loggerService.writeLogToServer(operateLogRequestBody);
                 } catch (Exception e) {

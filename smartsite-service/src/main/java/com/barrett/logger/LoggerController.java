@@ -19,6 +19,7 @@ import java.util.List;
 public class LoggerController {
     @Autowired
     private LoggerService loggerService;
+
     /**
      * @Description: Online test for writing access log to database using provided API
      * @Param:
@@ -30,8 +31,8 @@ public class LoggerController {
     public String accessLoggerTest() {
         System.out.println("Writing access log using http request...");
         // Construct demo entity for access log:
-        AccessLogRequestBody.AccessLogData data = new AccessLogRequestBody.AccessLogData("周冰66","spc-screen","用户列表访问测试测试","http://223.84.191.228:2200/SmartSitePatrolManage/index.html","testing params"
-                ,338288333,"好像啥也没有做",348282353,"123","192.168.0.1", "Ubuntu", "Firefox", "Mozilla/5.0");
+        AccessLogRequestBody.AccessLogData data = new AccessLogRequestBody.AccessLogData("周冰66", "spc-screen", "用户列表访问测试测试", "http://223.84.191.228:2200/SmartSitePatrolManage/index.html", "testing params"
+                , 338288333, "好像啥也没有做", 348282353, "123", "192.168.0.1", "Ubuntu", "Firefox", "Mozilla/5.0");
         List<AccessLogRequestBody.AccessLogData> dataList = new ArrayList<>();
         dataList.add(data);
         AccessLogRequestBody dataBody = new AccessLogRequestBody(dataList, 338288333, "zhoubingtest");

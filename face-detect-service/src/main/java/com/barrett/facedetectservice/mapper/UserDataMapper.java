@@ -2,6 +2,7 @@ package com.barrett.facedetectservice.mapper;
 
 import com.barrett.facedetectservice.bean.UserData;
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 @Mapper

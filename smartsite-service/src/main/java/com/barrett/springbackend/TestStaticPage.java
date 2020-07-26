@@ -15,7 +15,7 @@ import java.util.Map;
 public class TestStaticPage {
 
     @RequestMapping({"/WebPageTestIndex"})
-    public String WebPageTest(Map<String, Object> map){
+    public String WebPageTest(Map<String, Object> map) {
         // Put data into map:
         map.put("name", "Barrett");
         map.put("age", "30");

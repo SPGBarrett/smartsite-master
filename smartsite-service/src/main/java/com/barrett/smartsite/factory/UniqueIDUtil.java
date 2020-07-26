@@ -22,14 +22,14 @@ public class UniqueIDUtil {
     }
 
     // Change multi file suffix to M3U8:
-    public static String changeSuffix(String fileName){
+    public static String changeSuffix(String fileName) {
         //Get file name without suffix:
         String fileNameRaw = fileName.substring(0, fileName.lastIndexOf("."));
         return fileNameRaw + ".m3u8";
     }
 
     // Get filename form URL path link:
-    public static String getFileNameFromUrlLink(String urlLink){
+    public static String getFileNameFromUrlLink(String urlLink) {
         return urlLink.substring(urlLink.lastIndexOf("/"));
     }
 

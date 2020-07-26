@@ -5,6 +5,7 @@ import com.barrett.aialertservice.bean.VestMsgData;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface VestMsgDataMapper {
     @Insert({"INSERT INTO vest_msg_data(id,guid,parent_id,message,nums_of_wrong_clothes,alert_flag,time_stamp) VALUES (#{id},#{guid},#{parent_id},#{message},#{nums_of_wrong_clothes},#{alert_flag},#{time_stamp})"})

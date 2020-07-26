@@ -1,8 +1,10 @@
 package com.barrett.smartsite;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @program: smartsite
  * @description:
@@ -11,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @CrossOrigin
 @RestController
-public class DemoApis
-{
+public class DemoApis {
     @RequestMapping(value = {"/DemoApis"}, method = {RequestMethod.GET})
-    public String demoIndex() { return "This is a demo of SpringBoot Application!"; }
+    public String demoIndex() {
+        return "This is a demo of SpringBoot Application!";
+    }
 }

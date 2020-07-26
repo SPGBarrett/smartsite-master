@@ -1,6 +1,7 @@
 package com.barrett.logger;
 
 import org.springframework.web.client.RestTemplate;
+
 /**
  * @program: smartsite
  * @description: Encapsulated http requests using restTemplate
@@ -10,14 +11,12 @@ import org.springframework.web.client.RestTemplate;
 public class HttpFunctions {
 
     /**
-    * @Description:  Send Post request
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-
-
+     * @Description: Send Post request
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
 
 
 }

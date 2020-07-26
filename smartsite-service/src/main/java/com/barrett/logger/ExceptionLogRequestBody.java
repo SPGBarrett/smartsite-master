@@ -47,7 +47,7 @@ public class ExceptionLogRequestBody {
         this.sign = sign;
     }
 
-    public static class ExceptionLogData{
+    public static class ExceptionLogData {
         String logUser;//日志关系人
         String logTitle;//日志标题
         String logModule;//日志模块

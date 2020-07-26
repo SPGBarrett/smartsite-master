@@ -1,7 +1,9 @@
 package com.barrett.smartsite.controller;
+
 import com.barrett.smartsite.bean.MapScreenSetting;
 import com.barrett.smartsite.controller.MapScreenSettingController;
 import com.barrett.smartsite.service.MapScreenSettingService;
+
 import java.util.List;
 
 import io.swagger.annotations.Api;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @program: smartsite
  * @description:

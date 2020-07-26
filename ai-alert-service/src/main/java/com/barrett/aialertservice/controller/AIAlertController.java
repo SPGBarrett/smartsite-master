@@ -51,8 +51,8 @@ public class AIAlertController {
     String helmetLogFileLocation;
 
     // Insert one line of data:
-    @ApiOperation(value = "接收并储存安全帽预警", notes="将算法推送的数据，解析后保存至数据库")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "helmetAlertInfoInput", value = "安全帽预警数据", dataType = "HelmetAlertInfoInput", paramType = "body", required = true)})
+    @ApiOperation(value = "接收并储存安全帽预警", notes = "将算法推送的数据，解析后保存至数据库")
+    @ApiImplicitParams({@ApiImplicitParam(name = "helmetAlertInfoInput", value = "安全帽预警数据", dataType = "HelmetAlertInfoInput", paramType = "body", required = true)})
     @RequestMapping(value = {"/HelmetAlert"}, method = {RequestMethod.POST})
     public String insert(@RequestBody HelmetAlertInfoInput helmetAlertInfoInput) {
         System.out.println(helmetAlertInfoInput);
@@ -60,52 +60,52 @@ public class AIAlertController {
         return helmetAlertInfoService.insertHelmetAlertData(helmetAlertInfoInput).toString();
     }
 
-    @ApiOperation(value = "接收并储存安全帽预警并推送", notes="将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "helmetAlertInfoInput", value = "安全帽预警数据", dataType = "HelmetAlertInfoInput", paramType = "body", required = true)})
+    @ApiOperation(value = "接收并储存安全帽预警并推送", notes = "将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
+    @ApiImplicitParams({@ApiImplicitParam(name = "helmetAlertInfoInput", value = "安全帽预警数据", dataType = "HelmetAlertInfoInput", paramType = "body", required = true)})
     @RequestMapping(value = {"/HelmetAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushHelmet(@RequestBody HelmetAlertInfoInput helmetAlertInfoInput) {
-        try{
+        try {
             System.out.println(new Date());
             System.out.println(helmetAlertInfoInput);
             // Save data to database:
             AIAlertPushMsg thisMsg = helmetAlertInfoService.insertHelmetAlertData(helmetAlertInfoInput);
             alertPushService.pushHelmetAlertMsg(thisMsg);
             return thisMsg;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("推送预警消息失败！");
             return null;
         }
     }
 
-    @ApiOperation(value = "接收并储存反光背心预警并推送", notes="将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "vestAlertInfoInput", value = "反光背心预警数据", dataType = "VestAlertInfoInput", paramType = "body", required = true)})
+    @ApiOperation(value = "接收并储存反光背心预警并推送", notes = "将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
+    @ApiImplicitParams({@ApiImplicitParam(name = "vestAlertInfoInput", value = "反光背心预警数据", dataType = "VestAlertInfoInput", paramType = "body", required = true)})
     @RequestMapping(value = {"/VestAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushVest(@RequestBody VestAlertInfoInput vestAlertInfoInput) {
-        try{
+        try {
             System.out.println(new Date());
             System.out.println(vestAlertInfoInput);
             // Save data to database:
             AIAlertPushMsg thisMsg = vestAlertInfoService.insertVestAlertData(vestAlertInfoInput);
             alertPushService.pushClothesAlertMsg(thisMsg);
             return thisMsg;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("推送预警消息失败！");
             return null;
         }
     }
 
-    @ApiOperation(value = "接收并储存着装预警并推送", notes="将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "clothesAlertInfoInput", value = "着装预警数据", dataType = "ClothesAlertInfoInput", paramType = "body", required = true)})
+    @ApiOperation(value = "接收并储存着装预警并推送", notes = "将算法推送的数据，解析后保存至数据库，然后推送至预警中心模块")
+    @ApiImplicitParams({@ApiImplicitParam(name = "clothesAlertInfoInput", value = "着装预警数据", dataType = "ClothesAlertInfoInput", paramType = "body", required = true)})
     @RequestMapping(value = {"/ClothesAlert/Push"}, method = {RequestMethod.POST})
     public AIAlertPushMsg insertAndPushClothes(@RequestBody ClothesAlertInfoInput clothesAlertInfoInput) {
-        try{
+        try {
             System.out.println(new Date());
             System.out.println(clothesAlertInfoInput);
             // Save data to database:
             AIAlertPushMsg thisMsg = clothesAlertInfoService.insertClothesAlertData(clothesAlertInfoInput);
             alertPushService.pushClothesAlertMsg(thisMsg);
             return thisMsg;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("推送预警消息失败！");
             return null;
         }
@@ -121,8 +121,8 @@ public class AIAlertController {
     }
 
     // Restful API availability test:
-    @ApiOperation(value = "测试API存活接口", notes="测试API存活接口")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "strJson", value = "测试字符串", paramType = "query", required = true)})
+    @ApiOperation(value = "测试API存活接口", notes = "测试API存活接口")
+    @ApiImplicitParams({@ApiImplicitParam(name = "strJson", value = "测试字符串", paramType = "query", required = true)})
     @RequestMapping(value = {"/test2"}, method = {RequestMethod.POST})
     public String test22(@RequestBody String strJson) {
         System.out.println(strJson);
@@ -131,7 +131,7 @@ public class AIAlertController {
 
     // Restful API availability test for clothes:
     @ApiOperation(value = "保存着装推送字符串到文件")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "strJson", value = "着装推送字符串", paramType = "query", required = true)})
+    @ApiImplicitParams({@ApiImplicitParam(name = "strJson", value = "着装推送字符串", paramType = "query", required = true)})
     @RequestMapping(value = {"/test3"}, method = {RequestMethod.POST})
     public String test23(@RequestBody String strJson) {
         File logFile = new File(clotheLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
@@ -140,7 +140,7 @@ public class AIAlertController {
             fw = new FileWriter(logFile);
             fw.write(strJson);//将字符串写入到指定的路径下的文件中
             fw.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "This is a test from port: " + currentPort;
@@ -148,7 +148,7 @@ public class AIAlertController {
 
     // Restful API availability test for vest:
     @ApiOperation(value = "保存反光背心推送字符串到文件")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "strJson", value = "反光背心推送字符串", paramType = "query", required = true)})
+    @ApiImplicitParams({@ApiImplicitParam(name = "strJson", value = "反光背心推送字符串", paramType = "query", required = true)})
     @RequestMapping(value = {"/test4"}, method = {RequestMethod.POST})
     public String test24(@RequestBody String strJson) {
         File logFile = new File(vestLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
@@ -157,7 +157,7 @@ public class AIAlertController {
             fw = new FileWriter(logFile);
             fw.write(strJson);//将字符串写入到指定的路径下的文件中
             fw.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "This is a test from port: " + currentPort;
@@ -165,7 +165,7 @@ public class AIAlertController {
 
     // Restful API availability test for helmet
     @ApiOperation(value = "保存安全帽推送字符串到文件")
-    @ApiImplicitParams({ @ApiImplicitParam(name = "strJson", value = "安全帽推送字符串", paramType = "query", required = true)})
+    @ApiImplicitParams({@ApiImplicitParam(name = "strJson", value = "安全帽推送字符串", paramType = "query", required = true)})
     @RequestMapping(value = {"/test5"}, method = {RequestMethod.POST})
     public String test25(@RequestBody String strJson) {
         File logFile = new File(helmetLogFileLocation);//新建一个文件对象，如果不存在则创建一个该文件
@@ -174,7 +174,7 @@ public class AIAlertController {
             fw = new FileWriter(logFile);
             fw.write(strJson);//将字符串写入到指定的路径下的文件中
             fw.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "This is a test from port: " + currentPort;

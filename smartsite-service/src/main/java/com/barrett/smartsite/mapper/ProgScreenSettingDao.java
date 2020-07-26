@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
-* @Description:
-* @Param:
-* @return:
-* @Author: Barrett
-* @Date:
-*/
+ * @Description:
+ * @Param:
+ * @return:
+ * @Author: Barrett
+ * @Date:
+ */
 @Mapper
 public interface ProgScreenSettingDao {
     @Insert({"INSERT INTO prog_screen_setting(id,screen_no,start_time,end_time,set_time,set_user) VALUES (#{id},#{screen_no},#{start_time},#{end_time},#{set_time},#{set_user})"})

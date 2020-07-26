@@ -77,9 +77,9 @@ public class MultiFilesController {
         System.out.println("Query data from <multi_files> by type selection...");
         // Get type selection；
         int displayType = multiScreenSettingService.getAll().get(0).getDisplay_type();
-        if(displayType == 0){
+        if (displayType == 0) {
             return this.multiFilesService.getAllByParams("IMAGE", "多媒体界面");
-        }else{
+        } else {
             return this.multiFilesService.getAllByParams("VIDEO", "多媒体界面");
         }
     }

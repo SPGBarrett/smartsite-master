@@ -22,6 +22,7 @@ import java.util.Map;
 public class FaceMsgSocketPush {
     @Value("${worker.info.push.url}")
     private String WORKER_INFO_PUSH_URL;
+
     /**
      * @Description: Push msg to alert manage server
      * @Param:
@@ -29,10 +30,10 @@ public class FaceMsgSocketPush {
      * @Author: Barrett
      * @Date:
      */
-    public String pushWorkerMsg(String base64Img, String cardNo, String workerName, String workerPosition, String workerDepartment, String workerInstitute, String deviceType, String workerInSite){
+    public String pushWorkerMsg(String base64Img, String cardNo, String workerName, String workerPosition, String workerDepartment, String workerInstitute, String deviceType, String workerInSite) {
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
-        try{
+        try {
             HttpHeaders requestHeader = new HttpHeaders();
             requestHeader.setContentType(MediaType.APPLICATION_JSON);
             //body
@@ -52,21 +53,21 @@ public class FaceMsgSocketPush {
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(WORKER_INFO_PUSH_URL, requestEntity, String.class);
             responseBody = responseEntity.getBody();
             System.out.println(responseBody);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
         return responseBody;
     }
-    
-    /** 
-    * @Description: Async method 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public void pushWorkerMsgAsync(String base64Img, String cardNo, String workerName, String workerPosition, String workerDepartment, String workerInstitute,String deviceType, String workerInSite){
+
+    /**
+     * @Description: Async method
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void pushWorkerMsgAsync(String base64Img, String cardNo, String workerName, String workerPosition, String workerDepartment, String workerInstitute, String deviceType, String workerInSite) {
         Thread pushThread = new Thread(new Runnable() {
             @Override
             public void run() {

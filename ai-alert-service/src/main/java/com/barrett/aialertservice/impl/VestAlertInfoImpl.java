@@ -52,10 +52,10 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         String detectPicFileName = UniqueIDGenerator.getUUIDWithoutDash() + ".jpg";
         // Save images to file:
         ImageProcessor ip = new ImageProcessor();
-        try{
+        try {
             ip.saveBase64StringToFile(inputData.getPic_data(), detectImageSavePath + detectPicFileName);
             ip.saveBase64StringToFile(inputData.getSrcpic_data(), detectImageSavePath + srcPicFileName);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("写图像文件失败！");
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         thisMsg.setSrcpic_data(srcPicFileName);
         thisMsg.setSrcpic_name(inputData.getSrcpic_name());
         thisMsg.setStatus(inputData.getStatus());
-        thisMsg.setTime_stamp(inputData.getTime_stamp()*1000);
+        thisMsg.setTime_stamp(inputData.getTime_stamp() * 1000);
         thisMsg.setAlert_type(2);
         // Get VestMsgData:
         thisData.setGuid(guidOfMsgData);
@@ -79,7 +79,7 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         thisData.setNums_of_wrong_clothes(inputData.getData().getAlert_num());
         thisData.setTime_stamp(100000);
         // Get VestInfo:
-        for(VestAlertInfoInput.Vests.VestDetail thisDetail : inputData.getData().getAlert_info()){
+        for (VestAlertInfoInput.Vests.VestDetail thisDetail : inputData.getData().getAlert_info()) {
             VestInfo tmp = new VestInfo();
             String guidOfVestInfo = UniqueIDGenerator.getUUIDWithoutDash();
             tmp.setGuid(guidOfVestInfo);
@@ -94,7 +94,7 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         // Save data to db:
         alertMsgMapper.insert(thisMsg);
         vestMsgDataMapper.insert(thisData);
-        for(VestInfo thisInfo : thisInfoList){
+        for (VestInfo thisInfo : thisInfoList) {
             vestInfoMapper.insert(thisInfo);
         }
         // Construct output files:
@@ -112,7 +112,7 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         resultMsgToPush.setAlert_img_name(inputData.getPic_name());
         resultMsgToPush.setAlert_msg(detectPicFileName);
         resultMsgToPush.setAlert_type("Vest Alert");
-        resultMsgToPush.setTime_stamp(inputData.getTime_stamp()*1000);
+        resultMsgToPush.setTime_stamp(inputData.getTime_stamp() * 1000);
         resultMsgToPush.setIp(deviceIP);
         //# First save all data to database,
         //# Then, build new img and create a new json file for pushing msg, in Base64 format.
@@ -128,10 +128,10 @@ public class VestAlertInfoImpl implements VestAlertInfoService {
         List<VestInfo> thisInfoList = vestInfoMapper.getAllByParentID(thisData.getGuid());
         // Process image:
         String pBase64Img = "";
-        if(processImageSwitch == true){
+        if (processImageSwitch == true) {
             ImageProcessor ip = new ImageProcessor();
             pBase64Img = ip.drawRectInImgFromBase64ForVest(thisMsg.getPic_data(), thisInfoList);
-        }else{
+        } else {
             pBase64Img = "data:image/jpg;base64," + thisMsg.getPic_data();
         }
         // Get useful data；

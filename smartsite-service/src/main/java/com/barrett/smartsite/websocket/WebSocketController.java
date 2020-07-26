@@ -3,6 +3,7 @@ package com.barrett.smartsite.websocket;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.io.IOException;
 
 /**
@@ -18,16 +19,17 @@ public class WebSocketController {
     //页面请求
     @GetMapping("/{cid}")
     public ModelAndView socket(@PathVariable String cid) {
-        ModelAndView mav=new ModelAndView("/socket");
+        ModelAndView mav = new ModelAndView("/socket");
         mav.addObject("cid", cid);
         return mav;
     }
+
     // Data pusher
     @ResponseBody
     @RequestMapping("/push/{cid}")
-    public String pushToWeb(@PathVariable String cid,String message) {
+    public String pushToWeb(@PathVariable String cid, String message) {
         try {
-            WebSocketServer.sendInfo(message,cid);
+            WebSocketServer.sendInfo(message, cid);
         } catch (IOException e) {
             e.printStackTrace();
             return "false";
@@ -40,7 +42,7 @@ public class WebSocketController {
     @RequestMapping("/pushJson/{cid}")
     public String pushJsonToWeb(@PathVariable String cid, @RequestBody String jsonMsg) {
         try {
-            WebSocketServer.sendInfo(jsonMsg,cid);
+            WebSocketServer.sendInfo(jsonMsg, cid);
         } catch (IOException e) {
             e.printStackTrace();
             return "false";
@@ -49,15 +51,12 @@ public class WebSocketController {
     }
 
 
-
-
-
     // Data pusher test
     @ResponseBody
     @RequestMapping("/pushTest/{cid}")
     public String pushTest(@PathVariable String cid) {
         try {
-            WebSocketServer.sendInfo("工地产生预警消息！！！" ,cid);
+            WebSocketServer.sendInfo("工地产生预警消息！！！", cid);
         } catch (IOException e) {
             e.printStackTrace();
             return "false";
@@ -70,7 +69,7 @@ public class WebSocketController {
     @RequestMapping("/pushUpdate/{cid}")
     public String pushUpdate(@PathVariable String cid) {
         try {
-            WebSocketServer.sendInfo("UpdateParams" ,cid);
+            WebSocketServer.sendInfo("UpdateParams", cid);
         } catch (IOException e) {
             e.printStackTrace();
             return "false";
@@ -83,7 +82,7 @@ public class WebSocketController {
     @RequestMapping("/pushIndexUpdate/{cid}")
     public String pushIndexUpdate(@PathVariable String cid) {
         try {
-            WebSocketServer.sendInfo("UpdateIndexParams" ,cid);
+            WebSocketServer.sendInfo("UpdateIndexParams", cid);
         } catch (IOException e) {
             e.printStackTrace();
             return "false";

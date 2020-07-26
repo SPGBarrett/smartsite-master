@@ -47,7 +47,7 @@ public class OperateLogRequestBody {
         this.sign = sign;
     }
 
-    public static class OperateLogData{
+    public static class OperateLogData {
         String operUser;//操作人
         String operModule;//操作模块
         String operType;//操作类型

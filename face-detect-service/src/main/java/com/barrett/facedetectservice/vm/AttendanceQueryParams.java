@@ -10,8 +10,8 @@ import lombok.Data;
  **/
 @Data
 public class AttendanceQueryParams {
-    String projectNum;		//项目编号  测试编号：gddntest
-    String modifyTime;		//同步时间 时间戳
-    int size;				//每页记录数
-    int page;				//当前页码
+    String projectNum;        //项目编号  测试编号：gddntest
+    String modifyTime;        //同步时间 时间戳
+    int size;                //每页记录数
+    int page;                //当前页码
 }

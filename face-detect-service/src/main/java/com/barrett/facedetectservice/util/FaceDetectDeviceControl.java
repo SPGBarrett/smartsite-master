@@ -120,48 +120,45 @@ public class FaceDetectDeviceControl {
         return lAlarmHandle;
     }
 // All the callback methods:
-    /** 
-    * @Description:  
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FGPSDataCallback implements HCNetSDK.fGPSDataCallback
-    {
-        public void invoke(NativeLong nHandle, int dwState, Pointer lpBuffer, int dwBufLen, Pointer pUser)
-        {
+
+    /**
+     * @Description:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FGPSDataCallback implements HCNetSDK.fGPSDataCallback {
+        public void invoke(NativeLong nHandle, int dwState, Pointer lpBuffer, int dwBufLen, Pointer pUser) {
         }
     }
-    /** 
-    * @Description: 设置人脸的回调函数 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FRemoteCfgCallBackFaceSet implements HCNetSDK.FRemoteConfigCallback
-    {
-        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData)
-        {
+
+    /**
+     * @Description: 设置人脸的回调函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FRemoteCfgCallBackFaceSet implements HCNetSDK.FRemoteConfigCallback {
+        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
             System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
-            switch (dwType){
+            switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
-                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus  = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
+                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
                     struCfgStatus.write();
                     Pointer pCfgStatus = struCfgStatus.getPointer();
-                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0,struCfgStatus.size());
+                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0, struCfgStatus.size());
                     struCfgStatus.read();
 
                     int iStatus = 0;
-                    for(int i=0;i<4;i++)
-                    {
-                        int ioffset = i*8;
-                        int iByte = struCfgStatus.byStatus[i]&0xff;
+                    for (int i = 0; i < 4; i++) {
+                        int ioffset = i * 8;
+                        int iByte = struCfgStatus.byStatus[i] & 0xff;
                         iStatus = iStatus + (iByte << ioffset);
                     }
 
-                    switch (iStatus){
+                    switch (iStatus) {
                         case 1000:// NET_SDK_CALLBACK_STATUS_SUCCESS
                             System.out.println("下发人脸参数成功,dwStatus:" + iStatus);
                             break;
@@ -170,10 +167,9 @@ public class FaceDetectDeviceControl {
                             break;
                         case 1002:
                             int iErrorCode = 0;
-                            for(int i=0;i<4;i++)
-                            {
-                                int ioffset = i*8;
-                                int iByte = struCfgStatus.byErrorCode[i]&0xff;
+                            for (int i = 0; i < 4; i++) {
+                                int ioffset = i * 8;
+                                int iByte = struCfgStatus.byErrorCode[i] & 0xff;
                                 iErrorCode = iErrorCode + (iByte << ioffset);
                             }
                             System.out.println("下发人脸参数失败, dwStatus:" + iStatus + "错误号:" + iErrorCode);
@@ -181,10 +177,10 @@ public class FaceDetectDeviceControl {
                     }
                     break;
                 case 2:// 获取状态数据
-                    HCNetSDK.NET_DVR_FACE_PARAM_STATUS  m_struFaceStatus = new HCNetSDK.NET_DVR_FACE_PARAM_STATUS();
+                    HCNetSDK.NET_DVR_FACE_PARAM_STATUS m_struFaceStatus = new HCNetSDK.NET_DVR_FACE_PARAM_STATUS();
                     m_struFaceStatus.write();
                     Pointer pStatusInfo = m_struFaceStatus.getPointer();
-                    pStatusInfo.write(0, lpBuffer.getByteArray(0, m_struFaceStatus.size()), 0,m_struFaceStatus.size());
+                    pStatusInfo.write(0, lpBuffer.getByteArray(0, m_struFaceStatus.size()), 0, m_struFaceStatus.size());
                     m_struFaceStatus.read();
                     String str = new String(m_struFaceStatus.byCardNo).trim();
                     System.out.println("下发人脸数据关联的卡号:" + str + ",人脸读卡器状态:" +
@@ -194,36 +190,33 @@ public class FaceDetectDeviceControl {
             }
         }
     }
-    /** 
-    * @Description:  获取到人脸的回调函数
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FRemoteCfgCallBackFaceCapture implements HCNetSDK.FRemoteConfigCallback
-    {
-        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData)
-        {
+
+    /**
+     * @Description: 获取到人脸的回调函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FRemoteCfgCallBackFaceCapture implements HCNetSDK.FRemoteConfigCallback {
+        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
             System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
-            switch (dwType)
-            {
+            switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
-                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus  = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
+                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
                     struCfgStatus.write();
                     Pointer pCfgStatus = struCfgStatus.getPointer();
-                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0,struCfgStatus.size());
+                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0, struCfgStatus.size());
                     struCfgStatus.read();
 
                     int iStatus = 0;
-                    for(int i=0;i<4;i++)
-                    {
-                        int ioffset = i*8;
-                        int iByte = struCfgStatus.byStatus[i]&0xff;
+                    for (int i = 0; i < 4; i++) {
+                        int ioffset = i * 8;
+                        int iByte = struCfgStatus.byStatus[i] & 0xff;
                         iStatus = iStatus + (iByte << ioffset);
                     }
 
-                    switch (iStatus){
+                    switch (iStatus) {
                         case 1000:// NET_SDK_CALLBACK_STATUS_SUCCESS
                             System.out.println("采集人脸信息成功,dwStatus:" + iStatus);
                             break;
@@ -242,22 +235,21 @@ public class FaceDetectDeviceControl {
                     pStatusInfo.write(0, lpBuffer.getByteArray(0, struFaceCfg.size()), 0, struFaceCfg.size());
                     struFaceCfg.read();
                     System.out.println("采集进度:" + struFaceCfg.byCaptureProgress + ",人脸图片数据大小:" + struFaceCfg.dwFacePicSize);
-                    if((struFaceCfg.byCaptureProgress==100)&&(struFaceCfg.dwFacePicSize>0))
-                    {
+                    if ((struFaceCfg.byCaptureProgress == 100) && (struFaceCfg.dwFacePicSize > 0)) {
                         SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                         String newName = sf.format(new Date());
                         FileOutputStream fout;
                         try {
-                            fout = new FileOutputStream(newName+"_CaptureFacePic.jpg");
+                            fout = new FileOutputStream(newName + "_CaptureFacePic.jpg");
                             //将字节写入文件
                             long offset = 0;
                             ByteBuffer buffers = struFaceCfg.pFacePicBuffer.getByteBuffer(offset, struFaceCfg.dwFacePicSize);
-                            byte [] bytes = new byte[struFaceCfg.dwFacePicSize];
+                            byte[] bytes = new byte[struFaceCfg.dwFacePicSize];
                             buffers.rewind();
                             buffers.get(bytes);
                             fout.write(bytes);
                             fout.close();
-                        }catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -271,34 +263,32 @@ public class FaceDetectDeviceControl {
             }
         }
     }
-    /** 
-    * @Description: 下发卡的回调函数 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FRemoteCfgCallBackCardSet implements HCNetSDK.FRemoteConfigCallback
-    {
-        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData)
-        {
+
+    /**
+     * @Description: 下发卡的回调函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FRemoteCfgCallBackCardSet implements HCNetSDK.FRemoteConfigCallback {
+        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
             System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
-            switch (dwType){
+            switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
                     HCNetSDK.REMOTECONFIGSTATUS_CARD struCardStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
                     struCardStatus.write();
                     Pointer pInfoV30 = struCardStatus.getPointer();
-                    pInfoV30.write(0, lpBuffer.getByteArray(0, struCardStatus.size()), 0,struCardStatus.size());
+                    pInfoV30.write(0, lpBuffer.getByteArray(0, struCardStatus.size()), 0, struCardStatus.size());
                     struCardStatus.read();
 
                     int iStatus = 0;
-                    for(int i=0;i<4;i++)
-                    {
-                        int ioffset = i*8;
-                        int iByte = struCardStatus.byStatus[i]&0xff;
+                    for (int i = 0; i < 4; i++) {
+                        int ioffset = i * 8;
+                        int iByte = struCardStatus.byStatus[i] & 0xff;
                         iStatus = iStatus + (iByte << ioffset);
                     }
-                    switch (iStatus){
+                    switch (iStatus) {
                         case 1000:// NET_SDK_CALLBACK_STATUS_SUCCESS
                             System.out.println("下发卡参数成功,dwStatus:" + iStatus);
                             break;
@@ -307,10 +297,9 @@ public class FaceDetectDeviceControl {
                             break;
                         case 1002:
                             int iErrorCode = 0;
-                            for(int i=0;i<4;i++)
-                            {
-                                int ioffset = i*8;
-                                int iByte = struCardStatus.byErrorCode[i]&0xff;
+                            for (int i = 0; i < 4; i++) {
+                                int ioffset = i * 8;
+                                int iByte = struCardStatus.byErrorCode[i] & 0xff;
                                 iErrorCode = iErrorCode + (iByte << ioffset);
                             }
                             System.out.println("下发卡参数失败, dwStatus:" + iStatus + "错误号:" + iErrorCode);
@@ -322,35 +311,33 @@ public class FaceDetectDeviceControl {
             }
         }
     }
-    /** 
-    * @Description: 查询人脸参数的回调函数 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FRemoteCfgCallBackFaceGet implements HCNetSDK.FRemoteConfigCallback
-    {
-        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData)
-        {
+
+    /**
+     * @Description: 查询人脸参数的回调函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FRemoteCfgCallBackFaceGet implements HCNetSDK.FRemoteConfigCallback {
+        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
             System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
-            switch (dwType){
+            switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
-                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus  = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
+                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
                     struCfgStatus.write();
                     Pointer pCfgStatus = struCfgStatus.getPointer();
-                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0,struCfgStatus.size());
+                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0, struCfgStatus.size());
                     struCfgStatus.read();
 
                     int iStatus = 0;
-                    for(int i=0;i<4;i++)
-                    {
-                        int ioffset = i*8;
-                        int iByte = struCfgStatus.byStatus[i]&0xff;
+                    for (int i = 0; i < 4; i++) {
+                        int ioffset = i * 8;
+                        int iByte = struCfgStatus.byStatus[i] & 0xff;
                         iStatus = iStatus + (iByte << ioffset);
                     }
 
-                    switch (iStatus){
+                    switch (iStatus) {
                         case 1000:// NET_SDK_CALLBACK_STATUS_SUCCESS
                             System.out.println("查询人脸参数成功,dwStatus:" + iStatus);
                             break;
@@ -359,10 +346,9 @@ public class FaceDetectDeviceControl {
                             break;
                         case 1002:
                             int iErrorCode = 0;
-                            for(int i=0;i<4;i++)
-                            {
-                                int ioffset = i*8;
-                                int iByte = struCfgStatus.byErrorCode[i]&0xff;
+                            for (int i = 0; i < 4; i++) {
+                                int ioffset = i * 8;
+                                int iByte = struCfgStatus.byErrorCode[i] & 0xff;
                                 iErrorCode = iErrorCode + (iByte << ioffset);
                             }
                             System.out.println("查询人脸参数失败, dwStatus:" + iStatus + "错误号:" + iErrorCode);
@@ -373,7 +359,6 @@ public class FaceDetectDeviceControl {
                     processRecordedFaces(dwType, lpBuffer, dwBufLen, pUserData);
 
 
-
                     break;
                 default:
                     break;
@@ -381,22 +366,21 @@ public class FaceDetectDeviceControl {
         }
     }
 
-    /** 
-    * @Description: 布防的回调函数 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public class FMSGCallBack_V31 implements HCNetSDK.FMSGCallBack_V31
-    {
-        public boolean invoke(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser)
-        {
+    /**
+     * @Description: 布防的回调函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FMSGCallBack_V31 implements HCNetSDK.FMSGCallBack_V31 {
+        public boolean invoke(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
             AlarmDataHandle(lCommand, pAlarmer, pAlarmInfo, dwBufLen, pUser);
             return true;
         }
 
     }
+
     /**
      * @Description: 布防的回调函数-另一个版本
      * @Param:
@@ -404,26 +388,22 @@ public class FaceDetectDeviceControl {
      * @Author: Barrett
      * @Date:
      */
-    public class FMSGCallBack implements HCNetSDK.FMSGCallBack
-    {
+    public class FMSGCallBack implements HCNetSDK.FMSGCallBack {
         //报警信息回调函数
-        public void invoke(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser)
-        {
+        public void invoke(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
             AlarmDataHandle(lCommand, pAlarmer, pAlarmInfo, dwBufLen, pUser);
         }
     }
 
     /**
-    * @Description:  卡参数查询的回调函数
+     * @Description: 卡参数查询的回调函数
      * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public class FRemoteCfgCallBackCardGet implements HCNetSDK.FRemoteConfigCallback
-    {
-        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData)
-        {
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public class FRemoteCfgCallBackCardGet implements HCNetSDK.FRemoteConfigCallback {
+        public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
             HCNetSDK.MY_USER_DATA m_userData = new HCNetSDK.MY_USER_DATA();
             m_userData.write();
             Pointer pUserVData = m_userData.getPointer();
@@ -431,23 +411,22 @@ public class FaceDetectDeviceControl {
             m_userData.read();
 
             System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
-            switch (dwType){
+            switch (dwType) {
                 case 0: //NET_SDK_CALLBACK_TYPE_STATUS, Status Mode
-                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus  = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
+                    HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
                     struCfgStatus.write();
                     Pointer pCfgStatus = struCfgStatus.getPointer();
-                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0,struCfgStatus.size());
+                    pCfgStatus.write(0, lpBuffer.getByteArray(0, struCfgStatus.size()), 0, struCfgStatus.size());
                     struCfgStatus.read();
 
                     int iStatus = 0;
-                    for(int i=0;i<4;i++)
-                    {
-                        int ioffset = i*8;
-                        int iByte = struCfgStatus.byStatus[i]&0xff;
+                    for (int i = 0; i < 4; i++) {
+                        int ioffset = i * 8;
+                        int iByte = struCfgStatus.byStatus[i] & 0xff;
                         iStatus = iStatus + (iByte << ioffset);
                     }
 
-                    switch (iStatus){
+                    switch (iStatus) {
                         case 1000:// NET_SDK_CALLBACK_STATUS_SUCCESS
                             System.out.println("查询卡参数成功,dwStatus:" + iStatus);
                             break;
@@ -456,10 +435,9 @@ public class FaceDetectDeviceControl {
                             break;
                         case 1002:
                             int iErrorCode = 0;
-                            for(int i=0;i<4;i++)
-                            {
-                                int ioffset = i*8;
-                                int iByte = struCfgStatus.byErrorCode[i]&0xff;
+                            for (int i = 0; i < 4; i++) {
+                                int ioffset = i * 8;
+                                int iByte = struCfgStatus.byErrorCode[i] & 0xff;
                                 iErrorCode = iErrorCode + (iByte << ioffset);
                             }
                             System.out.println("查询卡参数失败, dwStatus:" + iStatus + "错误号:" + iErrorCode);
@@ -475,15 +453,14 @@ public class FaceDetectDeviceControl {
         }
     }
 
-    /** 
-    * @Description: Default 处理布防返回信息的函数 
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public void AlarmDataHandle(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser)
-    {
+    /**
+     * @Description: Default 处理布防返回信息的函数
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void AlarmDataHandle(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
         String sAlarmType = new String();
         String[] newRow = new String[3];
         //报警时间
@@ -493,18 +470,16 @@ public class FaceDetectDeviceControl {
 
         //  sAlarmType = new String("lCommand=") + lCommand.intValue();
         //lCommand是传的报警类型
-        switch (lCommand)
-        {
+        switch (lCommand) {
             case HCNetSDK.COMM_ALARM_V30:
                 HCNetSDK.NET_DVR_ALARMINFO_V30 strAlarmInfoV30 = new HCNetSDK.NET_DVR_ALARMINFO_V30();
                 strAlarmInfoV30.write();
                 Pointer pInfoV30 = strAlarmInfoV30.getPointer();
                 pInfoV30.write(0, pAlarmInfo.getByteArray(0, strAlarmInfoV30.size()), 0, strAlarmInfoV30.size());
                 strAlarmInfoV30.read();
-                switch (strAlarmInfoV30.dwAlarmType)
-                {
+                switch (strAlarmInfoV30.dwAlarmType) {
                     case 0:
-                        sAlarmType = sAlarmType + new String("：信号量报警") + "，"+ "报警输入口：" + (strAlarmInfoV30.dwAlarmInputNumber+1);
+                        sAlarmType = sAlarmType + new String("：信号量报警") + "，" + "报警输入口：" + (strAlarmInfoV30.dwAlarmInputNumber + 1);
                         break;
                     case 1:
                         sAlarmType = sAlarmType + new String("：硬盘满");
@@ -513,12 +488,10 @@ public class FaceDetectDeviceControl {
                         sAlarmType = sAlarmType + new String("：信号丢失");
                         break;
                     case 3:
-                        sAlarmType = sAlarmType + new String("：移动侦测") + "，"+ "报警通道：";
-                        for (int i=0; i<64; i++)
-                        {
-                            if (strAlarmInfoV30.byChannel[i] == 1)
-                            {
-                                sAlarmType=sAlarmType + "ch"+(i+1)+" ";
+                        sAlarmType = sAlarmType + new String("：移动侦测") + "，" + "报警通道：";
+                        for (int i = 0; i < 64; i++) {
+                            if (strAlarmInfoV30.byChannel[i] == 1) {
+                                sAlarmType = sAlarmType + "ch" + (i + 1) + " ";
                             }
                         }
                         break;
@@ -545,7 +518,7 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("布防信息：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
                 break;
@@ -556,34 +529,33 @@ public class FaceDetectDeviceControl {
                 pVcaInfo.write(0, pAlarmInfo.getByteArray(0, strVcaAlarm.size()), 0, strVcaAlarm.size());
                 strVcaAlarm.read();
 
-                switch (strVcaAlarm.struRuleInfo.wEventTypeEx)
-                {
+                switch (strVcaAlarm.struRuleInfo.wEventTypeEx) {
                     case 1:
                         sAlarmType = sAlarmType + new String("：穿越警戒面") + "，" +
                                 "_wPort:" + strVcaAlarm.struDevInfo.wPort +
                                 "_byChannel:" + strVcaAlarm.struDevInfo.byChannel +
-                                "_byIvmsChannel:" +  strVcaAlarm.struDevInfo.byIvmsChannel +
+                                "_byIvmsChannel:" + strVcaAlarm.struDevInfo.byIvmsChannel +
                                 "_Dev IP：" + new String(strVcaAlarm.struDevInfo.struDevIP.sIpV4);
                         break;
                     case 2:
                         sAlarmType = sAlarmType + new String("：目标进入区域") + "，" +
                                 "_wPort:" + strVcaAlarm.struDevInfo.wPort +
                                 "_byChannel:" + strVcaAlarm.struDevInfo.byChannel +
-                                "_byIvmsChannel:" +  strVcaAlarm.struDevInfo.byIvmsChannel +
+                                "_byIvmsChannel:" + strVcaAlarm.struDevInfo.byIvmsChannel +
                                 "_Dev IP：" + new String(strVcaAlarm.struDevInfo.struDevIP.sIpV4);
                         break;
                     case 3:
                         sAlarmType = sAlarmType + new String("：目标离开区域") + "，" +
                                 "_wPort:" + strVcaAlarm.struDevInfo.wPort +
                                 "_byChannel:" + strVcaAlarm.struDevInfo.byChannel +
-                                "_byIvmsChannel:" +  strVcaAlarm.struDevInfo.byIvmsChannel +
+                                "_byIvmsChannel:" + strVcaAlarm.struDevInfo.byIvmsChannel +
                                 "_Dev IP：" + new String(strVcaAlarm.struDevInfo.struDevIP.sIpV4);
                         break;
                     default:
                         sAlarmType = sAlarmType + new String("：其他行为分析报警") + "，" +
                                 "_wPort:" + strVcaAlarm.struDevInfo.wPort +
                                 "_byChannel:" + strVcaAlarm.struDevInfo.byChannel +
-                                "_byIvmsChannel:" +  strVcaAlarm.struDevInfo.byIvmsChannel +
+                                "_byIvmsChannel:" + strVcaAlarm.struDevInfo.byIvmsChannel +
                                 "_Dev IP：" + new String(strVcaAlarm.struDevInfo.struDevIP.sIpV4);
                         break;
                 }
@@ -594,26 +566,25 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("报警规则：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
 
-                if(strVcaAlarm.dwPicDataLen>0)
-                {
+                if (strVcaAlarm.dwPicDataLen > 0) {
                     SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                     String newName = sf.format(new Date());
                     FileOutputStream fout;
                     try {
-                        fout = new FileOutputStream(newName+"_VCA.jpg");
+                        fout = new FileOutputStream(newName + "_VCA.jpg");
                         //将字节写入文件
                         long offset = 0;
                         ByteBuffer buffers = strVcaAlarm.pImage.getPointer().getByteBuffer(offset, strVcaAlarm.dwPicDataLen);
-                        byte [] bytes = new byte[strVcaAlarm.dwPicDataLen];
+                        byte[] bytes = new byte[strVcaAlarm.dwPicDataLen];
                         buffers.rewind();
                         buffers.get(bytes);
                         fout.write(bytes);
                         fout.close();
-                    }catch (FileNotFoundException e) {
+                    } catch (FileNotFoundException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -629,10 +600,9 @@ public class FaceDetectDeviceControl {
                 pPlateInfo.write(0, pAlarmInfo.getByteArray(0, strPlateResult.size()), 0, strPlateResult.size());
                 strPlateResult.read();
                 try {
-                    String srt3=new String(strPlateResult.struPlateInfo.sLicense,"GBK");
-                    sAlarmType = sAlarmType + "：交通抓拍上传，车牌："+ srt3;
-                }
-                catch (UnsupportedEncodingException e1) {
+                    String srt3 = new String(strPlateResult.struPlateInfo.sLicense, "GBK");
+                    sAlarmType = sAlarmType + "：交通抓拍上传，车牌：" + srt3;
+                } catch (UnsupportedEncodingException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (IOException e) {
@@ -647,21 +617,20 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("车牌信息：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
 
-                if(strPlateResult.dwPicLen>0)
-                {
+                if (strPlateResult.dwPicLen > 0) {
                     SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                     String newName = sf.format(new Date());
                     FileOutputStream fout;
                     try {
-                        fout = new FileOutputStream(newName+"_PlateResult.jpg");
+                        fout = new FileOutputStream(newName + "_PlateResult.jpg");
                         //将字节写入文件
                         long offset = 0;
                         ByteBuffer buffers = strPlateResult.pBuffer1.getByteBuffer(offset, strPlateResult.dwPicLen);
-                        byte [] bytes = new byte[strPlateResult.dwPicLen];
+                        byte[] bytes = new byte[strPlateResult.dwPicLen];
                         buffers.rewind();
                         buffers.get(bytes);
                         fout.write(bytes);
@@ -682,10 +651,9 @@ public class FaceDetectDeviceControl {
                 pItsPlateInfo.write(0, pAlarmInfo.getByteArray(0, strItsPlateResult.size()), 0, strItsPlateResult.size());
                 strItsPlateResult.read();
                 try {
-                    String srt3=new String(strItsPlateResult.struPlateInfo.sLicense,"GBK");
-                    sAlarmType = sAlarmType + ",车辆类型："+strItsPlateResult.byVehicleType + ",交通抓拍上传，车牌："+ srt3;
-                }
-                catch (UnsupportedEncodingException e1) {
+                    String srt3 = new String(strItsPlateResult.struPlateInfo.sLicense, "GBK");
+                    sAlarmType = sAlarmType + ",车辆类型：" + strItsPlateResult.byVehicleType + ",交通抓拍上传，车牌：" + srt3;
+                } catch (UnsupportedEncodingException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (IOException e) {
@@ -700,24 +668,22 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("违章抓拍：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
 
-                for(int i=0;i<strItsPlateResult.dwPicNum;i++)
-                {
-                    if(strItsPlateResult.struPicInfo[i].dwDataLen>0)
-                    {
+                for (int i = 0; i < strItsPlateResult.dwPicNum; i++) {
+                    if (strItsPlateResult.struPicInfo[i].dwDataLen > 0) {
                         SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                         String newName = sf.format(new Date());
                         FileOutputStream fout;
                         try {
-                            String filename = newName+"_ITSPlateResult_type"+strItsPlateResult.struPicInfo[i].byType+".jpg";
+                            String filename = newName + "_ITSPlateResult_type" + strItsPlateResult.struPicInfo[i].byType + ".jpg";
                             fout = new FileOutputStream(filename);
                             //将字节写入文件
                             long offset = 0;
                             ByteBuffer buffers = strItsPlateResult.struPicInfo[i].pBuffer.getByteBuffer(offset, strItsPlateResult.struPicInfo[i].dwDataLen);
-                            byte [] bytes = new byte[strItsPlateResult.struPicInfo[i].dwDataLen];
+                            byte[] bytes = new byte[strItsPlateResult.struPicInfo[i].dwDataLen];
                             buffers.rewind();
                             buffers.get(bytes);
                             fout.write(bytes);
@@ -739,7 +705,7 @@ public class FaceDetectDeviceControl {
                 pPDCInfo.write(0, pAlarmInfo.getByteArray(0, strPDCResult.size()), 0, strPDCResult.size());
                 strPDCResult.read();
 
-                sAlarmType = sAlarmType + "：客流量统计，进入人数："+ strPDCResult.dwEnterNum + "，离开人数：" + strPDCResult.dwLeaveNum;
+                sAlarmType = sAlarmType + "：客流量统计，进入人数：" + strPDCResult.dwEnterNum + "，离开人数：" + strPDCResult.dwLeaveNum;
 
                 newRow[0] = dateFormat.format(today);
                 //报警类型
@@ -748,7 +714,7 @@ public class FaceDetectDeviceControl {
                 sIP = new String(strPDCResult.struDevInfo.struDevIP.sIpV4).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("流量统计：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
                 break;
@@ -760,12 +726,11 @@ public class FaceDetectDeviceControl {
                 pItsParkVehicle.write(0, pAlarmInfo.getByteArray(0, strItsParkVehicle.size()), 0, strItsParkVehicle.size());
                 strItsParkVehicle.read();
                 try {
-                    String srtParkingNo=new String(strItsParkVehicle.byParkingNo).trim(); //车位编号
-                    String srtPlate=new String(strItsParkVehicle.struPlateInfo.sLicense,"GBK").trim(); //车牌号码
-                    sAlarmType = sAlarmType + ",停产场数据,车位编号："+ srtParkingNo + ",车位状态："
-                            + strItsParkVehicle.byLocationStatus+ ",车牌："+ srtPlate;
-                }
-                catch (UnsupportedEncodingException e1) {
+                    String srtParkingNo = new String(strItsParkVehicle.byParkingNo).trim(); //车位编号
+                    String srtPlate = new String(strItsParkVehicle.struPlateInfo.sLicense, "GBK").trim(); //车牌号码
+                    sAlarmType = sAlarmType + ",停产场数据,车位编号：" + srtParkingNo + ",车位状态："
+                            + strItsParkVehicle.byLocationStatus + ",车牌：" + srtPlate;
+                } catch (UnsupportedEncodingException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 } catch (IOException e) {
@@ -780,24 +745,22 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("停车情况：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
 
-                for(int i=0;i<strItsParkVehicle.dwPicNum;i++)
-                {
-                    if(strItsParkVehicle.struPicInfo[i].dwDataLen>0)
-                    {
+                for (int i = 0; i < strItsParkVehicle.dwPicNum; i++) {
+                    if (strItsParkVehicle.struPicInfo[i].dwDataLen > 0) {
                         SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                         String newName = sf.format(new Date());
                         FileOutputStream fout;
                         try {
-                            String filename = newName+"_ITSPark_type"+strItsParkVehicle.struPicInfo[i].byType+".jpg";
+                            String filename = newName + "_ITSPark_type" + strItsParkVehicle.struPicInfo[i].byType + ".jpg";
                             fout = new FileOutputStream(filename);
                             //将字节写入文件
                             long offset = 0;
                             ByteBuffer buffers = strItsParkVehicle.struPicInfo[i].pBuffer.getByteBuffer(offset, strItsParkVehicle.struPicInfo[i].dwDataLen);
-                            byte [] bytes = new byte[strItsParkVehicle.struPicInfo[i].dwDataLen];
+                            byte[] bytes = new byte[strItsParkVehicle.struPicInfo[i].dwDataLen];
                             buffers.rewind();
                             buffers.get(bytes);
                             fout.write(bytes);
@@ -822,7 +785,7 @@ public class FaceDetectDeviceControl {
                 pIDCardInfo.write(0, pAlarmInfo.getByteArray(0, strIDCardInfo.size()), 0, strIDCardInfo.size());
                 strIDCardInfo.read();
 
-                sAlarmType = sAlarmType + "：门禁身份证刷卡信息，身份证号码："+  new String(strIDCardInfo.struIDCardCfg.byIDNum).trim() + "，姓名：" +
+                sAlarmType = sAlarmType + "：门禁身份证刷卡信息，身份证号码：" + new String(strIDCardInfo.struIDCardCfg.byIDNum).trim() + "，姓名：" +
                         new String(strIDCardInfo.struIDCardCfg.byName).trim() + "，报警主类型：" + strIDCardInfo.dwMajor + "，报警次类型：" + strIDCardInfo.dwMinor;
 
                 newRow[0] = dateFormat.format(today);
@@ -832,7 +795,7 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("身份证信息：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
                 break;
@@ -844,7 +807,7 @@ public class FaceDetectDeviceControl {
                 sIP = new String(pAlarmer.sDeviceIP).split("\0", 2);
                 newRow[2] = sIP[0];
                 System.out.println("默认信息：");
-                for(String info : newRow){
+                for (String info : newRow) {
                     System.out.println(info);
                 }
                 break;
@@ -852,13 +815,13 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description: Data and SDK initialization
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public void dataAndSDKInit(){
+     * @Description: Data and SDK initialization
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void dataAndSDKInit() {
         lUserID = new NativeLong(-1);
         lAlarmHandle = new NativeLong(-1);
         lListenHandle = new NativeLong(-1);
@@ -871,10 +834,9 @@ public class FaceDetectDeviceControl {
         fRemoteCfgCallBackFaceSet = null;
 
         boolean initSuc = hCNetSDK.NET_DVR_Init();
-        if (initSuc != true)
-        {
+        if (initSuc != true) {
             System.out.println("初始化失败");
-        }else{
+        } else {
             System.out.println("初始化成功");
         }
     }
@@ -886,7 +848,7 @@ public class FaceDetectDeviceControl {
      * @Author: Barrett
      * @Date:
      */
-    public void dataInit(){
+    public void dataInit() {
         lUserID = new NativeLong(-1);
         lAlarmHandle = new NativeLong(-1);
         lListenHandle = new NativeLong(-1);
@@ -899,46 +861,40 @@ public class FaceDetectDeviceControl {
         fRemoteCfgCallBackFaceSet = null;
     }
 
-    /** 
-    * @Description: 设置布防的触发方法
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
+    /**
+     * @Description: 设置布防的触发方法
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
     public void setupAlarmChan() {
-        if (lUserID.intValue() == -1)
-        {
+        if (lUserID.intValue() == -1) {
             System.out.println("请先注册");
             writeLogFiles("请先注册", LOG_FILE_PATH);
             return;
         }
         if (lAlarmHandle.intValue() < 0)//尚未布防,需要布防
         {
-            if (fMSFCallBack_V31 == null)
-            {
+            if (fMSFCallBack_V31 == null) {
                 fMSFCallBack_V31 = new FMSGCallBack_V31();
                 Pointer pUser = null;
-                if (!hCNetSDK.NET_DVR_SetDVRMessageCallBack_V31(fMSFCallBack_V31, pUser))
-                {
+                if (!hCNetSDK.NET_DVR_SetDVRMessageCallBack_V31(fMSFCallBack_V31, pUser)) {
                     System.out.println("设置回调函数失败!");
                     writeLogFiles("设置回调函数失败!", LOG_FILE_PATH);
                 }
             }
             HCNetSDK.NET_DVR_SETUPALARM_PARAM m_strAlarmInfo = new HCNetSDK.NET_DVR_SETUPALARM_PARAM();
-            m_strAlarmInfo.dwSize=m_strAlarmInfo.size();
-            m_strAlarmInfo.byLevel=1;
-            m_strAlarmInfo.byAlarmInfoType=1;
+            m_strAlarmInfo.dwSize = m_strAlarmInfo.size();
+            m_strAlarmInfo.byLevel = 1;
+            m_strAlarmInfo.byAlarmInfoType = 1;
             m_strAlarmInfo.byDeployType = 0;//布防类型：0-客户端布防，1-实时布防
             m_strAlarmInfo.write();
             lAlarmHandle = hCNetSDK.NET_DVR_SetupAlarmChan_V41(lUserID, m_strAlarmInfo);
-            if (lAlarmHandle.intValue() == -1)
-            {
+            if (lAlarmHandle.intValue() == -1) {
                 System.out.println("布防失败");
                 writeLogFiles("布防失败", LOG_FILE_PATH);
-            }
-            else
-            {
+            } else {
                 System.out.println("布防成功");
                 writeLogFiles("布防成功", LOG_FILE_PATH);
             }
@@ -946,13 +902,13 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description: 用户注册的触发方法
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public void userLogin(String deviceIP, int port, String userName, String password){
+     * @Description: 用户注册的触发方法
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void userLogin(String deviceIP, int port, String userName, String password) {
         //注册之前先注销已注册的用户,预览情况下不可注销
         if (lUserID.longValue() > -1) {
             //先注销
@@ -974,13 +930,13 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description: Get all user data by card:
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public void getAllUserInfoByCard(){
+     * @Description: Get all user data by card:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void getAllUserInfoByCard() {
         int iErr = 0;
         HCNetSDK.NET_DVR_CARD_CFG_COND m_struCardInputParam = new HCNetSDK.NET_DVR_CARD_CFG_COND();
         m_struCardInputParam.dwSize = m_struCardInputParam.size();
@@ -997,9 +953,8 @@ public class FaceDetectDeviceControl {
         Pointer pUserData = userData.getPointer();
         userData.write();
 
-        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_CARD_CFG_V50, lpInBuffer, m_struCardInputParam.size(),fRemoteCfgCallBackCardGet, pUserData);
-        if (lHandle.intValue() < 0)
-        {
+        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_CARD_CFG_V50, lpInBuffer, m_struCardInputParam.size(), fRemoteCfgCallBackCardGet, pUserData);
+        if (lHandle.intValue() < 0) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("建立长连接失败，错误号：" + iErr);
             return;
@@ -1013,8 +968,7 @@ public class FaceDetectDeviceControl {
             e.printStackTrace();
         }
 
-        if(!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle))
-        {
+        if (!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle)) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("断开长连接失败，错误号：" + iErr);
             return;
@@ -1029,13 +983,13 @@ public class FaceDetectDeviceControl {
      * @Author: Barrett
      * @Date:
      */
-    public void getAllRecordedFaces(List<String> cardNoList){
+    public void getAllRecordedFaces(List<String> cardNoList) {
         int iErr = 0;
         // 需要配置什么参数，就设置需要的参数，不是所有参数都要的。
         HCNetSDK.NET_DVR_FACE_PARAM_COND m_struFaceInputParam = new HCNetSDK.NET_DVR_FACE_PARAM_COND();
         m_struFaceInputParam.dwSize = m_struFaceInputParam.size();
         m_struFaceInputParam.byCardNo = "ZN0612".getBytes(); //根据人脸关联的卡号获取人脸
-        m_struFaceInputParam.byEnableCardReader[0]  = 1;
+        m_struFaceInputParam.byEnableCardReader[0] = 1;
         m_struFaceInputParam.dwFaceNum = 0xffffffff;//查找全部
         m_struFaceInputParam.byFaceID = 1;
         m_struFaceInputParam.write();
@@ -1044,9 +998,8 @@ public class FaceDetectDeviceControl {
         Pointer pUserData = null;
         fRemoteCfgCallBackFaceGet = new FRemoteCfgCallBackFaceGet();
 
-        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_FACE_PARAM_CFG, lpInBuffer, m_struFaceInputParam.size(),fRemoteCfgCallBackFaceGet, pUserData);
-        if (lHandle.intValue() < 0)
-        {
+        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_FACE_PARAM_CFG, lpInBuffer, m_struFaceInputParam.size(), fRemoteCfgCallBackFaceGet, pUserData);
+        if (lHandle.intValue() < 0) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("建立获取人脸长连接失败，错误号：" + iErr);
             return;
@@ -1060,8 +1013,7 @@ public class FaceDetectDeviceControl {
             e.printStackTrace();
         }
 
-        if(!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle))
-        {
+        if (!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle)) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("断开获取人脸长连接失败，错误号：" + iErr);
             return;
@@ -1077,13 +1029,13 @@ public class FaceDetectDeviceControl {
      * @Author: Barrett
      * @Date:
      */
-    public void getRecordedFacesByCardNo(String cardNo){
+    public void getRecordedFacesByCardNo(String cardNo) {
         int iErr = 0;
         // 需要配置什么参数，就设置需要的参数，不是所有参数都要的。
         HCNetSDK.NET_DVR_FACE_PARAM_COND m_struFaceInputParam = new HCNetSDK.NET_DVR_FACE_PARAM_COND();
         m_struFaceInputParam.dwSize = m_struFaceInputParam.size();
         m_struFaceInputParam.byCardNo = cardNo.getBytes(); //根据人脸关联的卡号获取人脸
-        m_struFaceInputParam.byEnableCardReader[0]  = 1;
+        m_struFaceInputParam.byEnableCardReader[0] = 1;
         m_struFaceInputParam.dwFaceNum = 0xffffffff;//查找全部
         m_struFaceInputParam.byFaceID = 1;
         m_struFaceInputParam.write();
@@ -1092,9 +1044,8 @@ public class FaceDetectDeviceControl {
         Pointer pUserData = null;
         fRemoteCfgCallBackFaceGet = new FRemoteCfgCallBackFaceGet();
 
-        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_FACE_PARAM_CFG, lpInBuffer, m_struFaceInputParam.size(),fRemoteCfgCallBackFaceGet, pUserData);
-        if (lHandle.intValue() < 0)
-        {
+        NativeLong lHandle = hCNetSDK.NET_DVR_StartRemoteConfig(lUserID, HCNetSDK.NET_DVR_GET_FACE_PARAM_CFG, lpInBuffer, m_struFaceInputParam.size(), fRemoteCfgCallBackFaceGet, pUserData);
+        if (lHandle.intValue() < 0) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("建立获取人脸长连接失败，错误号：" + iErr);
             return;
@@ -1108,8 +1059,7 @@ public class FaceDetectDeviceControl {
             e.printStackTrace();
         }
 
-        if(!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle))
-        {
+        if (!hCNetSDK.NET_DVR_StopRemoteConfig(lHandle)) {
             iErr = hCNetSDK.NET_DVR_GetLastError();
             System.out.println("断开获取人脸长连接失败，错误号：" + iErr);
             return;
@@ -1118,25 +1068,25 @@ public class FaceDetectDeviceControl {
     }
 
     // ******invoke when callback:******
-    private void processUserData(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData){
+    private void processUserData(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
         try {
             //Receive data:
             HCNetSDK.NET_DVR_CARD_CFG_V50 m_struCardInfo = new HCNetSDK.NET_DVR_CARD_CFG_V50();
             m_struCardInfo.write();
             Pointer pInfoV30 = m_struCardInfo.getPointer();
-            pInfoV30.write(0, lpBuffer.getByteArray(0, m_struCardInfo.size()), 0,m_struCardInfo.size());
+            pInfoV30.write(0, lpBuffer.getByteArray(0, m_struCardInfo.size()), 0, m_struCardInfo.size());
             m_struCardInfo.read();
             // Get info needed:
             String strCardNo = (new String(m_struCardInfo.byCardNo)).trim();
             String strCardType = String.valueOf(m_struCardInfo.byCardType).trim();
             String scannedNum = String.valueOf(m_struCardInfo.dwSwipeTime).trim();
             String strEmNo = String.valueOf(m_struCardInfo.dwEmployeeNo).trim();
-            String srtName=new String(m_struCardInfo.byName,"UTF8").trim(); //姓名
+            String srtName = new String(m_struCardInfo.byName, "UTF8").trim(); //姓名
             String strIDCard = "N/A";
-            if(userInfoMap == null){
+            if (userInfoMap == null) {
                 return;
-            }else{
-                if(userInfoMap.get(strCardNo) != null){
+            } else {
+                if (userInfoMap.get(strCardNo) != null) {
                     strIDCard = userInfoMap.get(strCardNo).toString();
                 }
             }
@@ -1161,8 +1111,7 @@ public class FaceDetectDeviceControl {
             thisUserData.setAuth_type(1);
             //userDataService.insert(thisUserData);
             userDataService.insertOrUpdate(thisUserData);
-        }
-        catch (Exception e1) {
+        } catch (Exception e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
             writeLogFiles("获取用户数据出错！" + e1.toString(), LOG_FILE_PATH);
@@ -1170,29 +1119,28 @@ public class FaceDetectDeviceControl {
     }
 
     // ******invoke when callback:******
-    private void processRecordedFaces(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData){
+    private void processRecordedFaces(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
         HCNetSDK.NET_DVR_FACE_PARAM_CFG m_struFaceInfo = new HCNetSDK.NET_DVR_FACE_PARAM_CFG();
         m_struFaceInfo.write();
         Pointer pInfoV30 = m_struFaceInfo.getPointer();
-        pInfoV30.write(0, lpBuffer.getByteArray(0, m_struFaceInfo.size()), 0,m_struFaceInfo.size());
+        pInfoV30.write(0, lpBuffer.getByteArray(0, m_struFaceInfo.size()), 0, m_struFaceInfo.size());
         m_struFaceInfo.read();
         String str = new String(m_struFaceInfo.byCardNo).trim();
         System.out.println("查询到人脸数据关联的卡号,getCardNo:" + str + ",人脸数据类型:" + m_struFaceInfo.byFaceDataType);
-        if(m_struFaceInfo.dwFaceLen >0)
-        {
+        if (m_struFaceInfo.dwFaceLen > 0) {
             SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
             String newName = sf.format(new Date());
             FileOutputStream fout;
             try {
                 // Create file and file stream:
-                String filename = newName +"_Card[" + str + "]_ACSFaceCfg.jpg";
+                String filename = newName + "_Card[" + str + "]_ACSFaceCfg.jpg";
                 filename = PIC_SAVE_PATH + filename;
                 fout = new FileOutputStream(filename);
                 //将字节写入文件
                 long offset = 0;
                 ByteBuffer buffers = m_struFaceInfo.pFaceBuffer.getByteBuffer(offset, m_struFaceInfo.dwFaceLen);
-                byte [] bytes = new byte[m_struFaceInfo.dwFaceLen];
-                ((Buffer)buffers).rewind();
+                byte[] bytes = new byte[m_struFaceInfo.dwFaceLen];
+                ((Buffer) buffers).rewind();
                 buffers.get(bytes);
                 fout.write(bytes);
                 fout.close();
@@ -1210,30 +1158,32 @@ public class FaceDetectDeviceControl {
         }
     }
 
-    /** 
-    * @Description: Using http request to get all userinfo from mis and generate a work_no, id_card map
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public void getUserInfoFromMis(){
+    /**
+     * @Description: Using http request to get all userinfo from mis and generate a work_no, id_card map
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void getUserInfoFromMis() {
         userInfoMap = new HashMap();
-        try{
+        try {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(GET_USER_URL, String.class);
             String responseBody = responseEntity.getBody();
             JSONObject jsonObject = JSONObject.parseObject(responseBody);
-            String dataString= jsonObject.getString("data");
+            String dataString = jsonObject.getString("data");
             JSONArray dataList = JSONObject.parseArray(dataString);
-            for(int i=0;i<dataList.size();i++){
+            for (int i = 0; i < dataList.size(); i++) {
                 String workNo = "0";
                 String idCard = "0";
-                if(dataList.getJSONObject(i).get("WORK_NUM") != null) workNo = dataList.getJSONObject(i).get("WORK_NUM").toString().trim();
-                if(dataList.getJSONObject(i).get("IDCARD") !=null) idCard = dataList.getJSONObject(i).get("IDCARD").toString().trim();
+                if (dataList.getJSONObject(i).get("WORK_NUM") != null)
+                    workNo = dataList.getJSONObject(i).get("WORK_NUM").toString().trim();
+                if (dataList.getJSONObject(i).get("IDCARD") != null)
+                    idCard = dataList.getJSONObject(i).get("IDCARD").toString().trim();
                 userInfoMap.put(workNo, idCard);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             userInfoMap = null;
             writeLogFiles(e.toString(), LOG_FILE_PATH);
@@ -1243,14 +1193,14 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description: Face detection callback methods encapsulated function
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    private void processFaceDetectData(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser){
-        try{
+     * @Description: Face detection callback methods encapsulated function
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    private void processFaceDetectData(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
+        try {
             // Define variables:
             String alarmType = new String();
             String[] consoleInfo = new String[3];
@@ -1279,7 +1229,7 @@ public class FaceDetectDeviceControl {
             String strUserInfo = new String(strACSInfo.sNetUser).trim();
             int alarmMajorType = strACSInfo.dwMajor;
             int alarmMinorType = strACSInfo.dwMinor;
-            alarmType = alarmType + "***刷卡时间: " +  dtAlarmTime.toString() + " 卡号："+  strCardNo + "，卡类型：" +
+            alarmType = alarmType + "***刷卡时间: " + dtAlarmTime.toString() + " 卡号：" + strCardNo + "，卡类型：" +
                     strACSInfo.struAcsEventInfo.byCardType + "，报警主类型：" + alarmMajorType + "，报警次类型：" + alarmMinorType +
                     "用户信息：" + strUserInfo + "工号：" + strACSInfo.struAcsEventInfo.dwEmployeeNo;
             String base64Result = "NA";
@@ -1291,19 +1241,18 @@ public class FaceDetectDeviceControl {
             consoleInfo[1] = alarmType;
             //报警设备IP地址
             consoleInfo[2] = deviceIP[0];
-            if(strACSInfo.struAcsEventInfo.byCardType == 1){
-                String logMsg = "时间: " +  dtAlarmTime.toString() + " 卡号："+  strCardNo + " IP:" + deviceIP[0] +
-                        "，报警主类型：" + strACSInfo.dwMajor +  "工号：" + strACSInfo.struAcsEventInfo.dwEmployeeNo;
+            if (strACSInfo.struAcsEventInfo.byCardType == 1) {
+                String logMsg = "时间: " + dtAlarmTime.toString() + " 卡号：" + strCardNo + " IP:" + deviceIP[0] +
+                        "，报警主类型：" + strACSInfo.dwMajor + "工号：" + strACSInfo.struAcsEventInfo.dwEmployeeNo;
                 writeLogFiles(logMsg, LOG_FILE_PATH);
             }
             // Output data to console:
             System.out.println("门禁报警触发：");
-            for(String info : consoleInfo){
+            for (String info : consoleInfo) {
                 System.out.println(info);
             }
             // Save img to file:
-            if(strACSInfo.dwPicDataLen>0 && alarmMajorType == 5 && alarmMinorType == 75)
-            {
+            if (strACSInfo.dwPicDataLen > 0 && alarmMajorType == 5 && alarmMinorType == 75) {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
                 Date fileDate = new Date();
                 fileDate.setTime(timeInMills);
@@ -1311,14 +1260,14 @@ public class FaceDetectDeviceControl {
                 FileOutputStream fout;
                 try {
                     // Create file and file stream:
-                    String filename = newName+"_ACS_card_"+ new String(strACSInfo.struAcsEventInfo.byCardNo).trim()+".jpg";
+                    String filename = newName + "_ACS_card_" + new String(strACSInfo.struAcsEventInfo.byCardNo).trim() + ".jpg";
                     filename = PIC_SAVE_PATH + filename;
                     fout = new FileOutputStream(filename);
                     //将字节写入文件
                     long offset = 0;
                     ByteBuffer buffers = strACSInfo.pPicData.getByteBuffer(offset, strACSInfo.dwPicDataLen);
-                    byte [] bytes = new byte[strACSInfo.dwPicDataLen];
-                    ((Buffer)buffers).rewind();
+                    byte[] bytes = new byte[strACSInfo.dwPicDataLen];
+                    ((Buffer) buffers).rewind();
                     buffers.get(bytes);
                     fout.write(bytes);
                     fout.close();
@@ -1337,7 +1286,7 @@ public class FaceDetectDeviceControl {
                 }
             }
             // Save data to DB:
-            if(strACSInfo.struAcsEventInfo.byCardType == 1 && alarmMajorType == 5 && alarmMinorType == 75){
+            if (strACSInfo.struAcsEventInfo.byCardType == 1 && alarmMajorType == 5 && alarmMinorType == 75) {
                 System.out.println("刷脸数据写入数据库...");
                 FaceDetectData thisFaceDetectData = new FaceDetectData();
                 thisFaceDetectData.setGuid(UniqueIDGenerator.getUUIDWithoutDash());
@@ -1355,14 +1304,14 @@ public class FaceDetectDeviceControl {
                 faceDetectDataService.insert(thisFaceDetectData);
             }
             // Push checkin info to LED screen:
-            if(PUSH_TO_SITE_SCREEN == true){
-                if(strACSInfo.struAcsEventInfo.byCardType == 1 && alarmMajorType == 5 && alarmMinorType == 75){
+            if (PUSH_TO_SITE_SCREEN == true) {
+                if (strACSInfo.struAcsEventInfo.byCardType == 1 && alarmMajorType == 5 && alarmMinorType == 75) {
                     String workerName = "";
                     String workerPosition = "";
                     String workerInstitute = "";
                     String workerDepartment = "";
                     List<UserData> userDataList = userDataService.getByCardNo(strCardNo);
-                    try{
+                    try {
                         // Get all required user info:
                         String jsonUserInfo = getUserInfoByCardNoFromUserModule(strCardNo);
                         ObjectMapper objectMapper = new ObjectMapper();
@@ -1371,28 +1320,28 @@ public class FaceDetectDeviceControl {
                         workerPosition = jsonNode.get("data").get("position").toString();
                         workerInstitute = jsonNode.get("data").get("company").get("name").toString();
                         workerDepartment = jsonNode.get("data").get("office").get("name").toString();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         workerName = "未知员工";
                         System.out.println(e);
                     }
 
-                    if(userDataList == null || userDataList.size() == 0){
+                    if (userDataList == null || userDataList.size() == 0) {
                         //workerName = "未知员工";
-                    }else{
+                    } else {
                         //workerName = userDataList.get(0).getUser_name();
                     }
                     String deviceType = "";
                     List<String> deviceNoList = deviceIPMapService.getDeviceNoByIP(deviceIP[0]);
-                    if(userDataList == null || userDataList.size() == 0){
+                    if (userDataList == null || userDataList.size() == 0) {
                         deviceType = "1";
-                    }else{
+                    } else {
                         deviceType = deviceNoList.get(0);
                     }
                     String workerInSite = String.valueOf(calculateNumOfWorkerInSite());
                     faceMsgSocketPush.pushWorkerMsgAsync(base64Result, strCardNo, workerName, workerPosition, workerDepartment, workerInstitute, deviceType, workerInSite);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             writeLogFiles(e.toString(), LOG_FILE_PATH);
         }
@@ -1400,13 +1349,13 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description: Get all available ips from database
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public List<DeviceIPMap> getAllDeviceInfo(){
+     * @Description: Get all available ips from database
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public List<DeviceIPMap> getAllDeviceInfo() {
         List<DeviceIPMap> resultList = new ArrayList<>();
         // Query for data:
         RestTemplate restTemplate = new RestTemplate();
@@ -1418,7 +1367,7 @@ public class FaceDetectDeviceControl {
         try {
             List<DeviceInfoInput> checkDeviceInfoInputList = objectMapper.readValue(jsonResponseCheck, typeFactory.constructCollectionType(List.class, DeviceInfoInput.class));
             List<DeviceInfoInput> patrolDeviceInfoInputList = objectMapper.readValue(jsonResponsePatrol, typeFactory.constructCollectionType(List.class, DeviceInfoInput.class));
-            for(DeviceInfoInput dii : checkDeviceInfoInputList){
+            for (DeviceInfoInput dii : checkDeviceInfoInputList) {
                 DeviceIPMap tmpDeviceIPMap = new DeviceIPMap();
                 tmpDeviceIPMap.setGuid(UniqueIDGenerator.getUUIDWithoutDash());
                 tmpDeviceIPMap.setDevice_ip(dii.getIp());
@@ -1430,15 +1379,15 @@ public class FaceDetectDeviceControl {
                 tmpDeviceIPMap.setDevice_location(dii.getSsgd());
                 tmpDeviceIPMap.setUsername(dii.getUser());
                 tmpDeviceIPMap.setPassword(dii.getPasserword());
-                double x=0;
-                double y=0;
-                if(dii.getX() != null) x= Double.parseDouble(dii.getX());
-                if(dii.getX() != null) y= Double.parseDouble(dii.getY());
+                double x = 0;
+                double y = 0;
+                if (dii.getX() != null) x = Double.parseDouble(dii.getX());
+                if (dii.getX() != null) y = Double.parseDouble(dii.getY());
                 tmpDeviceIPMap.setLatitude(x);
                 tmpDeviceIPMap.setLongitude(y);
                 resultList.add(tmpDeviceIPMap);
             }
-            for(DeviceInfoInput dii : patrolDeviceInfoInputList){
+            for (DeviceInfoInput dii : patrolDeviceInfoInputList) {
                 DeviceIPMap tmpDeviceIPMap = new DeviceIPMap();
                 tmpDeviceIPMap.setGuid(UniqueIDGenerator.getUUIDWithoutDash());
                 tmpDeviceIPMap.setDevice_ip(dii.getIp());
@@ -1450,10 +1399,10 @@ public class FaceDetectDeviceControl {
                 tmpDeviceIPMap.setDevice_location(dii.getSsgd());
                 tmpDeviceIPMap.setUsername(dii.getUser());
                 tmpDeviceIPMap.setPassword(dii.getPasserword());
-                double x=0;
-                double y=0;
-                if(dii.getX() != null) x= Double.parseDouble(dii.getX());
-                if(dii.getX() != null) y= Double.parseDouble(dii.getY());
+                double x = 0;
+                double y = 0;
+                if (dii.getX() != null) x = Double.parseDouble(dii.getX());
+                if (dii.getX() != null) y = Double.parseDouble(dii.getY());
                 tmpDeviceIPMap.setLatitude(x);
                 tmpDeviceIPMap.setLongitude(y);
                 resultList.add(tmpDeviceIPMap);
@@ -1465,7 +1414,7 @@ public class FaceDetectDeviceControl {
         }
         // Save data to database:
         deviceIPMapService.deleteAll();
-        for(DeviceIPMap thisIPMap : resultList){
+        for (DeviceIPMap thisIPMap : resultList) {
             deviceIPMapService.insert(thisIPMap);
         }
         // Return result:
@@ -1473,38 +1422,38 @@ public class FaceDetectDeviceControl {
     }
 
     /**
-    * @Description:  Get all device information from local database
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public List<DeviceIPMap> getAllDeviceIPFromLocal(){
+     * @Description: Get all device information from local database
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public List<DeviceIPMap> getAllDeviceIPFromLocal() {
         return deviceIPMapService.getAll();
     }
 
 
     /**
-    * @Description: TImed task for updating information and restarting services
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public int deviceInfoUpdateTimedTask(){
+     * @Description: TImed task for updating information and restarting services
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public int deviceInfoUpdateTimedTask() {
         // Start a new thread or using quatz:
         return 0;
     }
 
 
     /**
-    * @Description: Calculate the number of workers on site
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public int calculateNumOfWorkerInSite(){
+     * @Description: Calculate the number of workers on site
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public int calculateNumOfWorkerInSite() {
         int resultNum = 0;
         //resultNum = faceDetectDataService.getWorkerInSiteData("1").size();
         resultNum = getWorkerNumInSiteFromUserModule();
@@ -1526,28 +1475,28 @@ public class FaceDetectDeviceControl {
 //        }
         return resultNum;
     }
-    
-    /** 
-    * @Description: Write log msg to file
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public int writeLogFiles(String logMsg, String filePath){
-        try{
+
+    /**
+     * @Description: Write log msg to file
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public int writeLogFiles(String logMsg, String filePath) {
+        try {
             File file = new File(filePath);
             FileOutputStream fos = null;
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
                 fos = new FileOutputStream(file);
-            }else{
-                fos = new FileOutputStream(file,true);
+            } else {
+                fos = new FileOutputStream(file, true);
             }
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
             osw.write(logMsg + "\n");
             osw.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1555,7 +1504,7 @@ public class FaceDetectDeviceControl {
 
 
     // Http Request: Get all user info:
-    private String getAllUserInfoFromUserModule(){
+    private String getAllUserInfoFromUserModule() {
         String result = "";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity responseEntity = restTemplate.getForEntity(ALL_USER_INFO_URL, String.class);
@@ -1565,7 +1514,7 @@ public class FaceDetectDeviceControl {
 
 
     // Http Request: Get user info by CardNo:
-    private String getUserInfoByCardNoFromUserModule(String cardNo){
+    private String getUserInfoByCardNoFromUserModule(String cardNo) {
         String result = "";
         RestTemplate restTemplate = new RestTemplate();
         String queryUrl = USERINFO_BYCARD_URL + cardNo;
@@ -1574,8 +1523,8 @@ public class FaceDetectDeviceControl {
         return result;
     }
 
-    private int getWorkerNumInSiteFromUserModule(){
-        try{
+    private int getWorkerNumInSiteFromUserModule() {
+        try {
             RestTemplate restTemplate = new RestTemplate();
             String queryUrl = WORKER_NUM_URL;
             ResponseEntity responseEntity = restTemplate.getForEntity(queryUrl, String.class);
@@ -1583,7 +1532,7 @@ public class FaceDetectDeviceControl {
             JsonNode jsonNode = objectMapper.readTree(responseEntity.getBody().toString());
             // Get all required user info:
             return Integer.valueOf(jsonNode.get("data").toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }

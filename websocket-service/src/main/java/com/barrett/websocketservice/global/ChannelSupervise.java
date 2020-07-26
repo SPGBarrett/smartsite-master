@@ -17,20 +17,24 @@ import java.util.concurrent.ConcurrentMap;
  * @create: 2020-04-30 15:31
  **/
 public class ChannelSupervise {
-    private   static ChannelGroup GlobalGroup=new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private  static ConcurrentMap<String, ChannelId> ChannelMap=new ConcurrentHashMap();
-    public  static void addChannel(Channel channel){
+    private static ChannelGroup GlobalGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    private static ConcurrentMap<String, ChannelId> ChannelMap = new ConcurrentHashMap();
+
+    public static void addChannel(Channel channel) {
         GlobalGroup.add(channel);
-        ChannelMap.put(channel.id().asShortText(),channel.id());
+        ChannelMap.put(channel.id().asShortText(), channel.id());
     }
-    public static void removeChannel(Channel channel){
+
+    public static void removeChannel(Channel channel) {
         GlobalGroup.remove(channel);
         ChannelMap.remove(channel.id().asShortText());
     }
-    public static  Channel findChannel(String id){
+
+    public static Channel findChannel(String id) {
         return GlobalGroup.find(ChannelMap.get(id));
     }
-    public static void send2All(TextWebSocketFrame tws){
+
+    public static void send2All(TextWebSocketFrame tws) {
         GlobalGroup.writeAndFlush(tws);
     }
 }

@@ -27,7 +27,7 @@ public class HelmetAlertInfoOutput {
     Heads data;
 
     @Data
-    public static class Heads{
+    public static class Heads {
         int id;
         String guid;
         long timeStamp; //时间戳

@@ -1,10 +1,12 @@
 package com.barrett.smartsite.controller;
+
 import com.barrett.smartsite.bean.MultiFiles;
 import com.barrett.smartsite.controller.FileUploadController;
 import com.barrett.smartsite.factory.FileUtil;
 import com.barrett.smartsite.factory.UniqueIDUtil;
 import com.barrett.smartsite.service.FileUploadService;
 import com.barrett.smartsite.service.MultiFilesService;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +53,7 @@ public class FileUploadController {
     public final String FILE_PARENT_WELCOME = "欢迎界面";
     public final String FILE_PARENT_MULTI = "多媒体界面";
 
-    @ApiOperation(value = "上传欢迎页面多媒体文件", notes="上传欢迎页面多媒体文件")
+    @ApiOperation(value = "上传欢迎页面多媒体文件", notes = "上传欢迎页面多媒体文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "多媒体文件", dataType = "MultipartFile", paramType = "body", required = true)
     })
@@ -62,7 +64,9 @@ public class FileUploadController {
     }
 
     @RequestMapping(value = {"/UploadFile"}, method = {RequestMethod.POST})
-    public String uploadMultiFile(@RequestParam("file") MultipartFile file) { return fileUtil.uploadFile(file, "多媒体界面"); }
+    public String uploadMultiFile(@RequestParam("file") MultipartFile file) {
+        return fileUtil.uploadFile(file, "多媒体界面");
+    }
 
 
     @RequestMapping(value = {"/ClearServerFiles"}, method = {RequestMethod.POST})
@@ -82,11 +86,11 @@ public class FileUploadController {
         this.multiFilesService.deleteAll();
     }
 
-    private void clearTargetedHistory(String type, String parent){
+    private void clearTargetedHistory(String type, String parent) {
         // Get all file name:
         List<MultiFiles> tmpList = this.multiFilesService.getAllByParams(type, parent);
         // Delete files:
-        for(MultiFiles thisFile : tmpList){
+        for (MultiFiles thisFile : tmpList) {
             String[] fileNames = thisFile.getUrl_link().split("/");
             String fileName = fileNames[fileNames.length - 1];
             String filePath = thisFile.getPath() + fileName;
@@ -96,11 +100,13 @@ public class FileUploadController {
         this.multiFilesService.deleteAllByParams(type, parent);
     }
 
-    private void clearOnlyDB() { this.multiFilesService.deleteAll(); }
+    private void clearOnlyDB() {
+        this.multiFilesService.deleteAll();
+    }
 
     // ****The one in use !!! *********************
     // Upload common multimedia files
-    @ApiOperation(value = "上传多媒体文件", notes="上传多媒体文件")
+    @ApiOperation(value = "上传多媒体文件", notes = "上传多媒体文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
     })
@@ -118,7 +124,7 @@ public class FileUploadController {
     }
 
     // Upload welcome screen related media files:
-    @ApiOperation(value = "上传欢迎页面多媒体文件", notes="上传欢迎页面多媒体文件")
+    @ApiOperation(value = "上传欢迎页面多媒体文件", notes = "上传欢迎页面多媒体文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
     })
@@ -133,7 +139,7 @@ public class FileUploadController {
     }
 
     // Upload party home related media files:
-    @ApiOperation(value = "上传党建家页面多媒体文件", notes="上传党建家页面多媒体文件")
+    @ApiOperation(value = "上传党建家页面多媒体文件", notes = "上传党建家页面多媒体文件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "files", value = "多媒体文件列表", dataType = "MultipartFile[]", paramType = "body", required = true)
     })

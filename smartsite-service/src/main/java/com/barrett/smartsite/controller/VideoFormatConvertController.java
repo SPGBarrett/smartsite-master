@@ -23,18 +23,18 @@ public class VideoFormatConvertController {
     FileUtil fileUtil;
 
     @RequestMapping("")
-    public String main(){
+    public String main() {
         return "hello, I'm skyjilygao";
     }
 
     @RequestMapping("convert")
-    public String convertVideo(){
-        String strResult = fileUtil.convertFileToM3U8("E:\\uploadFiles\\12314.mp4","E:\\convertFiles\\12314.m3u8");
+    public String convertVideo() {
+        String strResult = fileUtil.convertFileToM3U8("E:\\uploadFiles\\12314.mp4", "E:\\convertFiles\\12314.m3u8");
         return strResult;
     }
 
     @RequestMapping("convertCurrentFiles")
-    public String convertCurrentVideo(){
+    public String convertCurrentVideo() {
         String strResult = fileUtil.convertFilesAsync();
         return strResult;
     }

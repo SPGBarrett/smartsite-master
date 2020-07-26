@@ -120,7 +120,7 @@ public class HelmetAlertInfoInput {
     }
 
 
-    public static class Heads{
+    public static class Heads {
         int numOfHead; //检测到未戴安全帽的数量
         int alertFlag;
         List<HeadDetail> headInfo;
@@ -158,7 +158,7 @@ public class HelmetAlertInfoInput {
             this.headInfo = headInfo;
         }
 
-        public static class HeadDetail{
+        public static class HeadDetail {
             int x; //报警框左上角坐标x
             int y; //报警框左上角坐标y
             int width; //报警框宽度

@@ -61,6 +61,6 @@ public class MultiFilesImpl
 
     @Override
     public List<MultiFiles> getAllByParams(String typeString, String parentString) {
-        return multiFilesDao.getAllByParams(typeString,parentString);
+        return multiFilesDao.getAllByParams(typeString, parentString);
     }
 }

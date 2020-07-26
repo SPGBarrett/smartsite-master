@@ -5,6 +5,7 @@ import com.barrett.aialertservice.bean.VestInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface VestInfoMapper {
     @Insert({"INSERT INTO vest_info(id,guid,parent_id,x,y,width,height,probability) VALUES (#{id},#{guid},#{parent_id},#{x},#{y},#{width},#{height},#{probability})"})

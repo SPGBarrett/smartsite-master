@@ -26,6 +26,7 @@ import cn.jsms.api.common.model.SMSPayload;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @program: smartsite
  * @description: Text message pushing using jiguang push
@@ -114,7 +115,7 @@ public class TxtMsgPusher {
     }
 
     /**
-     *  The default value of ttl is 60 seconds.
+     * The default value of ttl is 60 seconds.
      */
     public static void testSendVoiceSMSCode() {
         SMSClient client = new SMSClient(masterSecret, appkey);

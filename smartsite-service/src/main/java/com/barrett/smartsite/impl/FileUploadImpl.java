@@ -52,10 +52,10 @@ public class FileUploadImpl
 
     public int deleteFile(String filePath) {
         File thisFile = new File(filePath);
-        try{
+        try {
             thisFile.delete();
             return 1;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return 0;
         }

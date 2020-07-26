@@ -29,7 +29,7 @@ public class ServiceFallbackProvider implements FallbackProvider {
 
     @Override
     public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-        return new ClientHttpResponse(){
+        return new ClientHttpResponse() {
 
             @Override
             public HttpHeaders getHeaders() {
@@ -56,7 +56,7 @@ public class ServiceFallbackProvider implements FallbackProvider {
 
             @Override
             public String getStatusText() throws IOException {
-                    return "{code:404,message:service error =_=}";
+                return "{code:404,message:service error =_=}";
             }
 
             @Override

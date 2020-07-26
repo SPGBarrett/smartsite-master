@@ -51,10 +51,10 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         String detectPicFileName = UniqueIDGenerator.getUUIDWithoutDash() + ".jpg";
         // Save images to file:
         ImageProcessor ip = new ImageProcessor();
-        try{
+        try {
             ip.saveBase64StringToFile(inputData.getPic_data(), detectImageSavePath + detectPicFileName);
             ip.saveBase64StringToFile(inputData.getSrcpic_data(), detectImageSavePath + srcPicFileName);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("写图像文件失败！");
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         thisMsg.setSrcpic_data(srcPicFileName);
         thisMsg.setSrcpic_name(inputData.getSrcpic_name());
         thisMsg.setStatus(inputData.getStatus());
-        thisMsg.setTime_stamp(inputData.getTime_stamp()*1000);
+        thisMsg.setTime_stamp(inputData.getTime_stamp() * 1000);
         // Get ClothesMsgData:
         thisData.setGuid(guidOfMsgData);
         thisData.setParent_id(guidOfAlertMsg);
@@ -77,7 +77,7 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         thisData.setTime_stamp(1000000);
         thisMsg.setAlert_type(3);
         // Get BodyInfo:
-        for(ClothesAlertInfoInput.Clothes.ClothesDetail thisDetail : inputData.getData().getBody_info()){
+        for (ClothesAlertInfoInput.Clothes.ClothesDetail thisDetail : inputData.getData().getBody_info()) {
             ClothesInfo tmp = new ClothesInfo();
             String guidOfClothesInfo = UniqueIDGenerator.getUUIDWithoutDash();
             tmp.setGuid(guidOfClothesInfo);
@@ -91,7 +91,7 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         // Save data to db:
         alertMsgMapper.insert(thisMsg);
         clothesMsgDataMapper.insert(thisData);
-        for(ClothesInfo thisInfo : thisInfoList){
+        for (ClothesInfo thisInfo : thisInfoList) {
             clothesInfoMapper.insert(thisInfo);
         }
         // Construct output files:
@@ -109,7 +109,7 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         resultMsgToPush.setAlert_img_name(inputData.getPic_name());
         resultMsgToPush.setAlert_msg(detectPicFileName);
         resultMsgToPush.setAlert_type("Clothes Alert");
-        resultMsgToPush.setTime_stamp(inputData.getTime_stamp()*1000);
+        resultMsgToPush.setTime_stamp(inputData.getTime_stamp() * 1000);
         resultMsgToPush.setIp(deviceIP);
         //# First save all data to database,
         //# Then, build new img and create a new json file for pushing msg, in Base64 format.
@@ -125,10 +125,10 @@ public class ClothesAlertInfoImpl implements ClothesAlertInfoService {
         List<ClothesInfo> thisInfoList = clothesInfoMapper.getAllByParentID(thisData.getGuid());
         // Process image:
         String pBase64Img = "";
-        if(processImageSwitch == true){
+        if (processImageSwitch == true) {
             ImageProcessor ip = new ImageProcessor();
             pBase64Img = ip.drawRectInImgFromBase64ForClothes(thisMsg.getPic_data(), thisInfoList);
-        }else{
+        } else {
             pBase64Img = "data:image/jpg;base64," + thisMsg.getPic_data();
         }
         // Get useful data；

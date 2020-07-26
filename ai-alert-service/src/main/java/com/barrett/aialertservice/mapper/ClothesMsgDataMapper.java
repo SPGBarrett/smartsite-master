@@ -5,6 +5,7 @@ import com.barrett.aialertservice.bean.HelmetMsgData;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface ClothesMsgDataMapper {
     @Insert({"INSERT INTO clothes_msg_data(id,guid,parent_id,time_stamp,alert_flag,report_num) VALUES (#{id},#{guid},#{parent_id},#{time_stamp},#{alert_flag},#{report_num})"})

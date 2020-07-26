@@ -38,10 +38,10 @@ public class ProgScreenSettingController {
     }
 
     @RequestMapping(value = {"/ProgScreenSettingAll"}, method = {RequestMethod.PUT})
-    public int insertAll(@RequestBody List<ProgScreenSetting> progScreenSettingList ) {
+    public int insertAll(@RequestBody List<ProgScreenSetting> progScreenSettingList) {
         int reuslt = 0;
         System.out.println("Input list data into <prog_screen_setting>...");
-        for(ProgScreenSetting pss : progScreenSettingList){
+        for (ProgScreenSetting pss : progScreenSettingList) {
             int tmp = this.progScreenSettingService.insert(pss);
             reuslt += tmp;
         }
@@ -81,7 +81,7 @@ public class ProgScreenSettingController {
 
     // Get all required params for program screen display:
     @RequestMapping(value = {"/ProgScreenSettingParamsAll"}, method = {RequestMethod.GET})
-    public List<ProgScreenSettingParams> getParamsAll(){
+    public List<ProgScreenSettingParams> getParamsAll() {
         System.out.println("Query all data from <prog_screen_setting> and <main_screen_setting>...");
         // Get required params:
         List<MainScreenSetting> mainScreenSettingList = mainScreenSettingService.getAll();

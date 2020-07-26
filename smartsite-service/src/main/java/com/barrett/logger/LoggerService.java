@@ -24,15 +24,14 @@ public class LoggerService {
     private final String OPERATE_LOGGER_URL = "/spc-hc/report/log/operate";
 
 
-
     /**
-    * @Description:
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public String writeAccessLogToServer(AccessLogRequestBody accessLogRequestBody){
+     * @Description:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public String writeAccessLogToServer(AccessLogRequestBody accessLogRequestBody) {
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(ACCESS_LOGGER_URL, accessLogRequestBody, String.class);
@@ -47,7 +46,7 @@ public class LoggerService {
      * @Author: Barrett
      * @Date:
      */
-    public String writeOperateLogToServer(OperateLogRequestBody operateLogRequestBody){
+    public String writeOperateLogToServer(OperateLogRequestBody operateLogRequestBody) {
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(OPERATE_LOGGER_URL, operateLogRequestBody, String.class);
@@ -62,7 +61,7 @@ public class LoggerService {
      * @Author: Barrett
      * @Date:
      */
-    public String writeExceptionLogToServer(ExceptionLogRequestBody exceptionLogRequestBody){
+    public String writeExceptionLogToServer(ExceptionLogRequestBody exceptionLogRequestBody) {
         String responseBody = "";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(EXCEPTION_LOGGER_URL, exceptionLogRequestBody, String.class);
@@ -71,23 +70,23 @@ public class LoggerService {
     }
 
     /**
-    * @Description: Generic function that send logger http request
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public <T> String writeLogToServer(T logRequestBody){
+     * @Description: Generic function that send logger http request
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public <T> String writeLogToServer(T logRequestBody) {
         String responseBody = "";
         //Check type to define url:
         String url = "";
-        if(logRequestBody instanceof  OperateLogRequestBody){
-            url =  loggerUrl + OPERATE_LOGGER_URL;
-        }else if(logRequestBody instanceof  AccessLogRequestBody){
-            url =  loggerUrl + ACCESS_LOGGER_URL;
-        }else if(logRequestBody instanceof  ExceptionLogRequestBody){
-            url =  loggerUrl + EXCEPTION_LOGGER_URL;
-        }else {
+        if (logRequestBody instanceof OperateLogRequestBody) {
+            url = loggerUrl + OPERATE_LOGGER_URL;
+        } else if (logRequestBody instanceof AccessLogRequestBody) {
+            url = loggerUrl + ACCESS_LOGGER_URL;
+        } else if (logRequestBody instanceof ExceptionLogRequestBody) {
+            url = loggerUrl + EXCEPTION_LOGGER_URL;
+        } else {
 
         }
         RestTemplate restTemplate = new RestTemplate();
@@ -98,26 +97,26 @@ public class LoggerService {
 
 
     /**
-    * @Description: Get user information from server
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public static String getUserInfoFromServer(){
+     * @Description: Get user information from server
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public static String getUserInfoFromServer() {
         String result = "";
 
         return result;
     }
-    
-    /** 
-    * @Description: Construct default params for operate log
-    * @Param:  
-    * @return:  
-    * @Author: Barrett
-    * @Date:  
-    */ 
-    public OperateLogRequestBody constructDefaultOperateLogData(String user, String module, String operType, String operDesc){
+
+    /**
+     * @Description: Construct default params for operate log
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public OperateLogRequestBody constructDefaultOperateLogData(String user, String module, String operType, String operDesc) {
         OperateLogRequestBody.OperateLogData logData = new OperateLogRequestBody.OperateLogData();
         // Get current time:
         long currentTime = System.currentTimeMillis();
@@ -144,7 +143,7 @@ public class LoggerService {
      * @Author: Barrett
      * @Date:
      */
-    public ExceptionLogRequestBody constructDefaultExceptionLogData(String user, String module, String requestUrl, String logMsg){
+    public ExceptionLogRequestBody constructDefaultExceptionLogData(String user, String module, String requestUrl, String logMsg) {
         ExceptionLogRequestBody.ExceptionLogData logData = new ExceptionLogRequestBody.ExceptionLogData();
         // Get current time:
         long currentTime = System.currentTimeMillis();

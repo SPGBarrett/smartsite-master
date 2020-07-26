@@ -46,33 +46,33 @@ public class FaceDetectServiceApplication {
         faceDetectDeviceControl.getUserInfoFromMis();
         boolean queryUserInfo = true;
         // Traverse all devices and login and setup alarm:
-        for(DeviceIPMap thisIP : ipList){
-            if(thisIP.getUsername() != null){
+        for (DeviceIPMap thisIP : ipList) {
+            if (thisIP.getUsername() != null) {
                 userName = thisIP.getUsername();
-            }else{
+            } else {
                 continue;
             }
-            if(thisIP.getPassword() != null){
+            if (thisIP.getPassword() != null) {
                 password = thisIP.getPassword();
-            }else{
+            } else {
                 continue;
             }
             // Login to device and save login device handle:
             System.out.println(thisIP.getDevice_ip() + ":" + thisIP.getDevice_port());
             System.out.println(userName + "---" + password);
-            faceDetectDeviceControl.userLogin(thisIP.getDevice_ip(), Integer.parseInt(thisIP.getDevice_port()), userName,password);
+            faceDetectDeviceControl.userLogin(thisIP.getDevice_ip(), Integer.parseInt(thisIP.getDevice_port()), userName, password);
             DeviceHandleSingleton.getInstance().getlUserIDList().add(faceDetectDeviceControl.getlUserID());
             // Set up alarm callback methods and save alarm handle:
-            faceDetectDeviceControl.writeLogFiles("布防："+ thisIP.getDevice_ip(), faceDetectDeviceControl.LOG_FILE_PATH);
+            faceDetectDeviceControl.writeLogFiles("布防：" + thisIP.getDevice_ip(), faceDetectDeviceControl.LOG_FILE_PATH);
             faceDetectDeviceControl.setupAlarmChan();
             DeviceHandleSingleton.getInstance().getlAlarmHandleList().add(faceDetectDeviceControl.getlUserID());
             // Query and update all user info:
-            if(queryUserInfo){ // Query only once
+            if (queryUserInfo) { // Query only once
                 faceDetectDeviceControl.getAllUserInfoByCard();
                 //queryUserInfo = false;
             }
             // Query and update all recorded face info:
-            if(queryUserInfo){ // Query only once
+            if (queryUserInfo) { // Query only once
                 //faceDetectDeviceControl.getAllRecordedFaces();
             }
             // Reinit login users and handles:

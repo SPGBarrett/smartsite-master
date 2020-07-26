@@ -5,6 +5,7 @@ import com.barrett.facedetectservice.vm.FaceDetectDataQuery;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface FaceDetectDataMapper {
     @Insert({"INSERT INTO face_detect_data(id,guid,time_stamp,alert_major_type,alert_minor_type,card_no,user_info,work_no,card_alert_type,device_no,device_ip,device_port,pic_data) VALUES (#{id},#{guid},#{time_stamp},#{alert_major_type},#{alert_minor_type},#{card_no},#{user_info},#{work_no},#{card_alert_type},#{device_no},#{device_ip},#{device_port},#{pic_data})"})
@@ -53,7 +54,7 @@ public interface FaceDetectDataMapper {
 
 
     @Select({"SELECT id,guid,time_stamp,alert_major_type,alert_minor_type,card_no,user_info,work_no,card_alert_type,device_no,device_ip,device_port,pic_data FROM face_detect_data WHERE time_stamp > #{time_tag}"})
-    @Results(id="getFaceDetectDataAll", value = {
+    @Results(id = "getFaceDetectDataAll", value = {
             @Result(property = "device_ip", column = "device_ip"),
             @Result(property = "device_type", column = "device_ip", many = @Many(select = "com.barrett.facedetectservice.mapper.DeviceIPMapMapper.getDeviceNoByIP")),
             @Result(property = "card_no", column = "card_no"),

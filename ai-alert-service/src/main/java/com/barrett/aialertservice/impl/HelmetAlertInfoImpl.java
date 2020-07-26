@@ -87,19 +87,19 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
     public List<HelmetAlertInfoOutput> getAll() {
         List<HelmetAlertInfoOutput> resultList = new ArrayList<>();
         List<AlertMsg> msgList = alertMsgMapper.getAll();
-        for (AlertMsg msg : msgList){
+        for (AlertMsg msg : msgList) {
             resultList.add(getByGuid(msg.getGuid()).get(0));
         }
         return resultList;
     }
 
-    /** 
-    * @Description: insert data from helmet info input 
-    * @Param:  
-    * @return:
-    * @Author: Barrett
-    * @Date:  
-    */ 
+    /**
+     * @Description: insert data from helmet info input
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
     @Override
     public AIAlertPushMsg insertHelmetAlertData(HelmetAlertInfoInput inputData) {
         AIAlertPushMsg resultMsgToPush = new AIAlertPushMsg();
@@ -114,10 +114,10 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         String detectPicFileName = UniqueIDGenerator.getUUIDWithoutDash() + ".jpg";
         // Save images to file:
         ImageProcessor ip = new ImageProcessor();
-        try{
+        try {
             ip.saveBase64StringToFile(inputData.getPic_data(), detectImageSavePath + detectPicFileName);
             ip.saveBase64StringToFile(inputData.getSrcpic_data(), detectImageSavePath + srcPicFileName);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("写图像文件失败！");
             e.printStackTrace();
         }
@@ -131,16 +131,16 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         thisMsg.setSrcpic_data(srcPicFileName);
         thisMsg.setSrcpic_name(inputData.getSrcpic_name());
         thisMsg.setStatus(inputData.getStatus());
-        thisMsg.setTime_stamp(inputData.getTime_stamp()*1000);
+        thisMsg.setTime_stamp(inputData.getTime_stamp() * 1000);
         thisMsg.setAlert_type(1);
         // Get HelmetMsgData:
         thisData.setGuid(guidOfHelmetMsgData);
         thisData.setParent_id(guidOfAlertMsg);
         thisData.setAlert_flag(inputData.getData().getAlertFlag());
         thisData.setNum_of_head(inputData.getData().getNumOfHead());
-        thisData.setTime_stamp(inputData.getTime_stamp()*1000);
+        thisData.setTime_stamp(inputData.getTime_stamp() * 1000);
         // Get HeadInfo:
-        for(HelmetAlertInfoInput.Heads.HeadDetail thisDetail : inputData.getData().getHeadInfo()){
+        for (HelmetAlertInfoInput.Heads.HeadDetail thisDetail : inputData.getData().getHeadInfo()) {
             HeadInfo tmp = new HeadInfo();
             String guidOfHeadInfo = UniqueIDGenerator.getUUIDWithoutDash();
             tmp.setGuid(guidOfHeadInfo);
@@ -156,7 +156,7 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         // Save data to db:
         alertMsgMapper.insert(thisMsg);
         helmetMsgDataMapper.insert(thisData);
-        for(HeadInfo thisInfo : thisHeadInfoList){
+        for (HeadInfo thisInfo : thisHeadInfoList) {
             headInfoMapper.insert(thisInfo);
         }
         // Construct output files:
@@ -174,7 +174,7 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         resultMsgToPush.setAlert_img_name(inputData.getPic_name());
         resultMsgToPush.setAlert_msg(detectPicFileName);
         resultMsgToPush.setAlert_type("Helmet Alert");
-        resultMsgToPush.setTime_stamp(inputData.getTime_stamp()*1000);
+        resultMsgToPush.setTime_stamp(inputData.getTime_stamp() * 1000);
         resultMsgToPush.setIp(deviceIP);
         //# First save all data to database,
         //# Then, build new img and create a new json file for pushing msg, in Base64 format.
@@ -182,12 +182,12 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
     }
 
     /**
-    * @Description: Push the data under a GUID
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
+     * @Description: Push the data under a GUID
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
     @Override
     public AIAlertPushMsg filterAlertPushData(String Guid) {
         AIAlertPushMsg msgResult = new AIAlertPushMsg();
@@ -197,10 +197,10 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         List<HeadInfo> thisHeadInfoList = headInfoMapper.getAllByParentID(thisData.getGuid());
         // Process image:
         String pBase64Img = "";
-        if(processImageSwitch == true){
+        if (processImageSwitch == true) {
             ImageProcessor ip = new ImageProcessor();
             pBase64Img = ip.drawRectInImgFromBase64ForHelmet(thisMsg.getPic_data(), thisHeadInfoList);
-        }else{
+        } else {
             pBase64Img = "data:image/jpg;base64," + thisMsg.getPic_data();
         }
         // Get useful data；

@@ -27,7 +27,7 @@ public class EurekaEventListenerService {
     // **********Define and implement event listeners: ******************
     // Service cancelled event:
     @EventListener(condition = "#event.replication==false")
-    public void listen(EurekaInstanceCanceledEvent event){
+    public void listen(EurekaInstanceCanceledEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("时间：" + sdf.format(event.getTimestamp()) + " ");
@@ -47,7 +47,7 @@ public class EurekaEventListenerService {
 
     // Service registered event:
     @EventListener(condition = "#event.replication==false")
-    public void listen(EurekaInstanceRegisteredEvent event){
+    public void listen(EurekaInstanceRegisteredEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("时间：" + sdf.format(event.getTimestamp()) + " ");
@@ -60,7 +60,7 @@ public class EurekaEventListenerService {
 
     // Service renewed (heartbeat) event:
     @EventListener(condition = "#event.replication==false")
-    public void listen(EurekaInstanceRenewedEvent event){
+    public void listen(EurekaInstanceRenewedEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("时间：" + sdf.format(event.getTimestamp()) + " ");
@@ -73,7 +73,7 @@ public class EurekaEventListenerService {
 
     // Eureka service launched event:
     @EventListener(condition = "#event.replication==false")
-    public void listen(EurekaRegistryAvailableEvent event){
+    public void listen(EurekaRegistryAvailableEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("时间：" + sdf.format(event.getTimestamp()) + " ");
@@ -86,7 +86,7 @@ public class EurekaEventListenerService {
 
     // Eureka service started event:
     @EventListener(condition = "#event.replication==false")
-    public void listen(EurekaServerStartedEvent event){
+    public void listen(EurekaServerStartedEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
         StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("时间：" + sdf.format(event.getTimestamp()) + " ");
@@ -97,7 +97,7 @@ public class EurekaEventListenerService {
         logger.info(msg);
     }
 
-    private void send(String msg){
+    private void send(String msg) {
         //用于封装邮件信息的实例
         SimpleMailMessage smm = new SimpleMailMessage();
         //由谁来发送邮件, 这里的名字必须和发件邮箱一致，否则报错
@@ -112,7 +112,7 @@ public class EurekaEventListenerService {
         try {
             jms.send(smm);
         } catch (Exception e) {
-            logger.info(msg+"错误",e);
+            logger.info(msg + "错误", e);
         }
     }
 }

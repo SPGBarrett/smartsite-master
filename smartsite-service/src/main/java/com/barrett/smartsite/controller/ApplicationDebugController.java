@@ -129,10 +129,9 @@ public class ApplicationDebugController {
 
 
     @RequestMapping(value = {"/testLog/{data}"}, method = {RequestMethod.GET})
-    public String testAOPLogFile(@PathVariable String data){
+    public String testAOPLogFile(@PathVariable String data) {
         return "This is the data of the input: " + data;
     }
-
 
 
     public void injectInitialData() {

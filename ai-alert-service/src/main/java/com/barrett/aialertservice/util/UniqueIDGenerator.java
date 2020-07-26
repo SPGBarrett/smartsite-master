@@ -9,14 +9,14 @@ import java.util.UUID;
  * @create: 2020-05-06 09:33
  **/
 public class UniqueIDGenerator {
-    public static String getUUIDWithDash(){
+    public static String getUUIDWithDash() {
         String result = UUID.randomUUID().toString();
         return result;
     }
 
-    public static String getUUIDWithoutDash(){
+    public static String getUUIDWithoutDash() {
         String result = UUID.randomUUID().toString();
-        result = result.replace("-","");
+        result = result.replace("-", "");
         return result;
     }
 
@@ -33,7 +33,7 @@ public class UniqueIDGenerator {
     }
 
     // Get filename form URL path link:
-    public static String getFileNameFromUrlLink(String urlLink){
+    public static String getFileNameFromUrlLink(String urlLink) {
         return urlLink.substring(urlLink.lastIndexOf("/"));
     }
 }

@@ -7,6 +7,7 @@ package com.barrett.zuulgateway.config;
  * @author: Barrett
  * @create: 2020-07-02 10:32
  **/
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -23,9 +24,6 @@ class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
     }
-
-
-
 
 
 }

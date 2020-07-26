@@ -1,4 +1,5 @@
 package com.barrett.smartsite.factory;
+
 import com.barrett.smartsite.bean.MultiFiles;
 
 import java.io.BufferedReader;
@@ -45,12 +46,12 @@ public class FileUtil {
     private final String appendUrl = "/external/";
 
     /**
-    * @Description:
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
+     * @Description:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
     private MultiFiles constructMultiFileFromMultipart(MultipartFile file, String fileParent, String nameForSave) {
         MultiFiles result = new MultiFiles();
         if (file == null) return null;
@@ -71,12 +72,12 @@ public class FileUtil {
     }
 
     /**
-    * @Description:  Method that implement uploading files and update database:
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
+     * @Description: Method that implement uploading files and update database:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
     public String uploadFile(MultipartFile file, String fileParent) {
         // Get file name for save:
         String fileNameForSave = UniqueIDUtil.getFileName(file.getOriginalFilename());
@@ -93,7 +94,7 @@ public class FileUtil {
         MultiFiles tmpFiles = constructMultiFileFromMultipart(file, fileParent, fileNameForSave);
         this.multiFilesService.insert(tmpFiles);
         // Update welcome screen setting:
-        if(fileParent.equals("欢迎界面")){
+        if (fileParent.equals("欢迎界面")) {
             String welcomeUrl = defaultUrl + appendUrl + fileNameForSave;
             welcomeScreenSettingService.updatePicPath(1, welcomeUrl);
         }
@@ -101,13 +102,13 @@ public class FileUtil {
     }
 
     /**
-    * @Description:  Convert MP4 file to m3u8:
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public String convertFileToM3U8(String sourcePath, String targetPath){
+     * @Description: Convert MP4 file to m3u8:
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public String convertFileToM3U8(String sourcePath, String targetPath) {
         String strOutput = "";
         //Construct cmd line:
         List<String> command = new ArrayList<>();
@@ -154,13 +155,13 @@ public class FileUtil {
     }
 
     /**
-    * @Description: Async method that convert files and save data to database
-    * @Param:
-    * @return:
-    * @Author: Barrett
-    * @Date:
-    */
-    public String convertFilesAsync(){
+     * @Description: Async method that convert files and save data to database
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public String convertFilesAsync() {
         String strResult = "Start Converting!";
         // Start new thread to do job:
         Thread thread = new Thread(new Runnable() {
@@ -169,8 +170,8 @@ public class FileUtil {
                 // Get all multi files:
                 List<MultiFiles> fileList = multiFilesService.getAll();
                 // Loop all files and convert:
-                for(MultiFiles file : fileList){
-                    if(file.getType().equals("VIDEO")){
+                for (MultiFiles file : fileList) {
+                    if (file.getType().equals("VIDEO")) {
                         //Get raw file name:
                         String orgLink = file.getUrl_link();
                         String fileNameRaw = UniqueIDUtil.getFileNameFromUrlLink(orgLink);

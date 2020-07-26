@@ -48,7 +48,7 @@ public class AccessLogRequestBody {
         this.sign = sign;
     }
 
-    public static class AccessLogData{
+    public static class AccessLogData {
         String logUser;//日志操作人
         String logModule;//日志模块
         String logTitle;//日志标题

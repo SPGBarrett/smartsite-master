@@ -116,7 +116,7 @@ public class VestAlertInfoInput {
         this.data = data;
     }
 
-    public static class Vests{
+    public static class Vests {
         int alert_flag;
         int alert_num;
         List<VestDetail> alert_info;
@@ -154,7 +154,7 @@ public class VestAlertInfoInput {
             this.alert_info = alert_info;
         }
 
-        public static class VestDetail{
+        public static class VestDetail {
             double confidence;
             int height; //报警框高度
             int width; //报警框宽度

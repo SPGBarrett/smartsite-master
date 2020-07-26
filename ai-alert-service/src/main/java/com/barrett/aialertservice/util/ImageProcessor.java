@@ -19,7 +19,7 @@ import java.util.List;
  * @create: 2020-05-06 11:19
  **/
 public class ImageProcessor {
-    public String drawRectInImgFromBase64ForHelmet(String base64Img, List<HeadInfo> boxList){
+    public String drawRectInImgFromBase64ForHelmet(String base64Img, List<HeadInfo> boxList) {
         String base64Result = "";
         // Decode base64 String to byte buffer:
         // Get rid of original base64 string head:
@@ -34,7 +34,7 @@ public class ImageProcessor {
             Graphics graph = image.getGraphics();
             graph.setColor(Color.RED);// Paint color
             // Draw rectangle:
-            for(HeadInfo thisInfo : boxList){
+            for (HeadInfo thisInfo : boxList) {
                 graph.drawRect(thisInfo.getX(), thisInfo.getY(), thisInfo.getWidth(), thisInfo.getHeight());
             }
             // Image to byte buffer:
@@ -47,12 +47,12 @@ public class ImageProcessor {
             bos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
         }
         return base64Result;
     }
 
-    public String drawRectInImgFromBase64ForClothes(String base64Img, List<ClothesInfo> boxList){
+    public String drawRectInImgFromBase64ForClothes(String base64Img, List<ClothesInfo> boxList) {
         String base64Result = "";
         // Decode base64 String to byte buffer:
         // Get rid of original base64 string head:
@@ -67,7 +67,7 @@ public class ImageProcessor {
             Graphics graph = image.getGraphics();
             graph.setColor(Color.RED);// Paint color
             // Draw rectangle:
-            for(ClothesInfo thisInfo : boxList){
+            for (ClothesInfo thisInfo : boxList) {
                 graph.drawRect(thisInfo.getX(), thisInfo.getY(), thisInfo.getWidth(), thisInfo.getHeight());
             }
             // Image to byte buffer:
@@ -80,12 +80,12 @@ public class ImageProcessor {
             bos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
         }
         return base64Result;
     }
 
-    public String drawRectInImgFromBase64ForVest(String base64Img, List<VestInfo> boxList){
+    public String drawRectInImgFromBase64ForVest(String base64Img, List<VestInfo> boxList) {
         String base64Result = "";
         // Decode base64 String to byte buffer:
         // Get rid of original base64 string head:
@@ -100,7 +100,7 @@ public class ImageProcessor {
             Graphics graph = image.getGraphics();
             graph.setColor(Color.RED);// Paint color
             // Draw rectangle:
-            for(VestInfo thisInfo : boxList){
+            for (VestInfo thisInfo : boxList) {
                 graph.drawRect(thisInfo.getX(), thisInfo.getY(), thisInfo.getWidth(), thisInfo.getHeight());
             }
             // Image to byte buffer:
@@ -113,16 +113,16 @@ public class ImageProcessor {
             bos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
         }
         return base64Result;
     }
 
-    public int saveBase64StringToFile(String base64String, String filePath){
+    public int saveBase64StringToFile(String base64String, String filePath) {
         // create a buffered image
         BufferedImage image = null;
         File file = new File(filePath);
-        if(base64String.length() <= 50){
+        if (base64String.length() <= 50) {
             System.out.println("Base64格式错误，无法储存！");
             return 0;
         }

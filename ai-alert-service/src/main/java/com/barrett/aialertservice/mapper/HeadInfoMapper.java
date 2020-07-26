@@ -4,6 +4,7 @@ import com.barrett.aialertservice.bean.HeadInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 @Mapper
 public interface HeadInfoMapper {
     @Insert({"INSERT INTO head_info(id,guid,parent_id,x,y,width,height,num_of_helmet,color) VALUES (#{id},#{guid},#{parent_id},#{x},#{y},#{width},#{height},#{num_of_helmet},#{color})"})

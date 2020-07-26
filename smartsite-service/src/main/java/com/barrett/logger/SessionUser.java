@@ -7,8 +7,7 @@ package com.barrett.logger;
  * @create: 2020-02-13 10:39
  **/
 public class SessionUser {
-    public class Rootobject
-    {
+    public class Rootobject {
         public String code;
         public Data data;
         public int isEnd;
@@ -77,8 +76,7 @@ public class SessionUser {
         }
     }
 
-    public class Data
-    {
+    public class Data {
         public int expires;
         public User user;
 
@@ -107,8 +105,7 @@ public class SessionUser {
         }
     }
 
-    public class User
-    {
+    public class User {
         public String id;
         public boolean isNewRecord;
         public String createDate;
@@ -337,8 +334,7 @@ public class SessionUser {
         }
     }
 
-    public class Company
-    {
+    public class Company {
         public String id;
         public boolean isNewRecord;
         public String parentIds;
@@ -447,8 +443,7 @@ public class SessionUser {
         }
     }
 
-    public class Area
-    {
+    public class Area {
         public String id;
         public boolean isNewRecord;
         public String parentIds;
@@ -537,8 +532,7 @@ public class SessionUser {
         }
     }
 
-    public class Office
-    {
+    public class Office {
         public String id;
         public boolean isNewRecord;
         public String parentIds;
@@ -647,8 +641,7 @@ public class SessionUser {
         }
     }
 
-    public class Area1
-    {
+    public class Area1 {
         public String id;
         public boolean isNewRecord;
         public String parentIds;
@@ -737,8 +730,7 @@ public class SessionUser {
         }
     }
 
-    public class Map
-    {
+    public class Map {
         public Map() {
         }
     }

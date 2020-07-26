@@ -116,7 +116,7 @@ public class ClothesAlertInfoInput {
         this.data = data;
     }
 
-    public static class Clothes{
+    public static class Clothes {
         int alert_flag;
         List<ClothesDetail> body_info;
         int report_num;
@@ -154,7 +154,7 @@ public class ClothesAlertInfoInput {
             this.report_num = report_num;
         }
 
-        public static class ClothesDetail{
+        public static class ClothesDetail {
             int height; //报警框高度
             int width; //报警框宽度
             int x; //报警框左上角坐标x
