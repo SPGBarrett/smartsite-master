@@ -21,16 +21,3 @@ public class SpringSubdemoApplication {
     }
 
 }
-
-// For Eureka discovery, check instances of this service:
-@RestController
-class ServiceInstanceRestController {
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
-    @RequestMapping("/service-instances/{applicationName}")
-    public List<ServiceInstance> serviceInstancesByApplicationName(
-            @PathVariable String applicationName) {
-        return this.discoveryClient.getInstances(applicationName);
-    }
-}

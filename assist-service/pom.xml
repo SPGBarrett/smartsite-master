@@ -64,6 +64,18 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <version>2.0.3.RELEASE</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
         <!-- SwaggerUI dependencies -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -86,6 +98,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Should add this for BeanUtils, even it is included in the external lib-->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
         <!-- External dependencies-->
         <dependency>
             <groupId>com.hs2e.common</groupId>
@@ -100,6 +118,12 @@
             <version>3.7</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/lib/commons-lang3-3.7.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
