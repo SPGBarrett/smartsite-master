@@ -23,6 +23,8 @@ public class LoggerService {
 
     private final String LOG_FILE_NAME = "FaceDetectAPILog.txt";
 
+    private final String INFO_LOG_NAME = "info_log.txt";
+
     /**
      * @Description: Write log info to file
      * @Param:
@@ -60,6 +62,48 @@ public class LoggerService {
             sb.append(inputMsg + "\n");
             sb.append("Response Message:" + "\n");
             sb.append(responseMsg + "\n");
+            osw.write(sb.toString() + "\n");
+            osw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @Description: Write log info to file
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    public void writeInfoLogs(String logPath, String msg){
+        try {
+            Date currentDate = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDateInDate = sdf.format(currentDate);
+            String folderPath = logPath + currentDateInDate;
+            String fileName = folderPath + "\\" + INFO_LOG_NAME;
+            File folder = new File(folderPath);
+            File file = new File(fileName);
+            FileOutputStream fos = null;
+            // Check folder exist:
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            // Check file:
+            if (!file.exists()) {
+                file.createNewFile();
+                fos = new FileOutputStream(file);
+            } else {
+                fos = new FileOutputStream(file, true);
+            }
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentDateInSec = sdf.format(currentDate);
+            StringBuilder sb = new StringBuilder();
+            sb.append(currentDateInSec + " InfoLog:" +  "\n");
+            sb.append(msg);
+            sb.append("\n");
             osw.write(sb.toString() + "\n");
             osw.close();
         } catch (Exception e) {

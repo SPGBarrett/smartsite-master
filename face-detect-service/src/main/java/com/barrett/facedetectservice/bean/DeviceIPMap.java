@@ -15,8 +15,8 @@ public class DeviceIPMap {
     String device_ip;//设备IP
     String device_port;//设备端口
     String device_type;//设备类型 - 1=考勤 2=刷脸巡检
-    String description;//设备的一些描述
-    String device_no;//设备编号
+    String description;//设备的一些描述 -- 当前用于储存考勤设备的编号
+    String device_no;//设备编号 1=进 2=出
     String device_name;//设备名称
     String device_location;//设备所属区域
     String username;//设备登录用户名

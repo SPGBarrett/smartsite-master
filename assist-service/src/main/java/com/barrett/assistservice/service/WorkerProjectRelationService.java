@@ -1,6 +1,9 @@
 package com.barrett.assistservice.service;
 
+import com.barrett.assistservice.bean.PMWorkerInfo;
 import com.barrett.assistservice.bean.WorkerProjectRelation;
+import com.barrett.assistservice.vm.DeleteProjectWorkerRelationInput;
+import com.barrett.assistservice.vm.PMWorkerTree;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,9 +25,21 @@ public interface WorkerProjectRelationService {
 
     int deleteAllByProjectID(@Param("project_id") int project_id);
 
+    int deleteAllByProjectGUID(@Param("project_guid") String project_guid);
+
+    int deleteByProjectGUIDAndWorkerIDs(DeleteProjectWorkerRelationInput deleteProjectWorkerRelationInput);
+
+    int deleteByProjectGUIDAndWorkerID(@Param("project_guid") String project_guid, @Param("worker_id") int worker_id);
+
     List<WorkerProjectRelation> getAllById(@Param("id") int paramInt);
 
     int[] getAllWorkerIdByProjectId(@Param("project_id") int project_id);
 
+    int[] getAllWorkerIdByProjectGUID(@Param("project_guid") String project_guid);
+
     List<WorkerProjectRelation> getAll();
+
+    List<PMWorkerInfo> getAllWorkerDetailByProjectId(@Param("project_id") int project_id);
+
+    List<PMWorkerInfo> getAllWorkerDetailByProjectGUID(@Param("project_guid") String project_guid);
 }

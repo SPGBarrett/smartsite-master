@@ -51,6 +51,11 @@ public class PMWorkerInfoImpl implements PMWorkerInfoService {
     }
 
     @Override
+    public List<PMWorkerInfo> getAllWorkerDetailBAndFilteredByProjectGUID(int cooperator_id, int group_id, String project_guid) {
+        return pmWorkerInfoMapper.getAllWorkerDetailBAndFilteredByProjectGUID(cooperator_id, group_id, project_guid);
+    }
+
+    @Override
     public List<PMWorkerInfo> getWorkerByCompany(int cooperator_id) {
         return pmWorkerInfoMapper.getWorkerByCompany(cooperator_id);
     }

@@ -31,6 +31,9 @@ public interface PMWorkerInfoMapper {
     @Select({"SELECT id,worker_id,name,id_card,time_card,project_id,cooperator_id,group_id,professional_id,cooperator_name,group_name,professional_name,status,modify_time FROM pm_worker_info WHERE cooperator_id=#{cooperator_id} AND group_id=#{group_id}"})
     List<PMWorkerInfo> getWorkerByCompanyAndDepartment(@Param("cooperator_id") int cooperator_id, @Param("group_id") int group_id);
 
+    @Select({"SELECT id,worker_id,name,id_card,time_card,project_id,cooperator_id,group_id,professional_id,cooperator_name,group_name,professional_name,status,modify_time FROM pm_worker_info WHERE cooperator_id=#{cooperator_id} AND group_id=#{group_id} AND worker_id NOT IN (SELECT worker_id FROM worker_project_relation WHERE project_guid=#{project_guid})"})
+    List<PMWorkerInfo> getAllWorkerDetailBAndFilteredByProjectGUID(@Param("cooperator_id") int cooperator_id, @Param("group_id") int group_id, @Param("project_guid") String project_guid);
+
     @Select({"SELECT id,worker_id,name,id_card,time_card,project_id,cooperator_id,group_id,professional_id,cooperator_name,group_name,professional_name,status,modify_time FROM pm_worker_info WHERE cooperator_id=#{cooperator_id}"})
     List<PMWorkerInfo> getWorkerByCompany(@Param("cooperator_id") int cooperator_id);
 

@@ -63,4 +63,9 @@ public class DeviceIPMapImpl implements DeviceIPMapService {
     public List<String> getAllDeviceIP() {
         return deviceIPMapMapper.getAllDeviceIP();
     }
+
+    @Override
+    public List<DeviceIPMap> getByIpAndPort(String ip, String port) {
+        return deviceIPMapMapper.getByIpAndPort(ip, port);
+    }
 }

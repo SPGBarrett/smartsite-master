@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 //import sun.rmi.server.InactiveGroupException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -311,6 +312,45 @@ public class FaceDetectProcessController {
         return resultList;
     }
 
+    /**
+     * @Description: Get checked data in one day, API provided for others
+     * @Param:
+     * @return:
+     * @Author: Barrett
+     * @Date:
+     */
+    @ApiOperation(value = "获取某时间点所在天一天内的所有刷脸信息", notes = "获取某时间点所在天一天内所有刷脸信息并以指定格式输出，提供给其他模块使用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "time", value = "时间戳", dataType = "EntryCheckParams", paramType = "query", required = true)
+    })
+    @RequestMapping(value = {"/AllCheckedFacesOutputDaily"}, method = {RequestMethod.GET})
+    public List<FaceDetectOutput> getAllCheckedFacesDaily(@RequestParam(value = "time", required = true) long time) {
+        System.out.println("Get all checked faces after in a certain day from database...");
+        List<FaceDetectOutput> resultList = new ArrayList<>();
+        // Get starting and ending time:
+        Date paramDate = new Date(time);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(paramDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startTime = calendar.getTime();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Date endTime = calendar.getTime();
+        // Get data:
+        List<FaceDetectData> tmpDataList = faceDetectDataService.getAllCheckinByTimeSpan(startTime.getTime(), endTime.getTime());
+        for (FaceDetectData d : tmpDataList) {
+            FaceDetectOutput thisData = new FaceDetectOutput();
+            thisData.setRecordTime(d.getTime_stamp());
+            thisData.setDeviceSn(d.getDevice_ip());
+            thisData.setWorkerId(d.getCard_no());
+            resultList.add(thisData);
+        }
+        return resultList;
+    }
+
     // Socket push test:
     @ApiOperation(value = "刷脸信息推送测试", notes = "刷脸信息推送测试")
     @RequestMapping(value = {"/faceInfoSocketPushTest"}, method = {RequestMethod.GET})
@@ -331,6 +371,7 @@ public class FaceDetectProcessController {
     @ApiOperation(value = "测试API可访问性")
     @RequestMapping(value = {"/test"}, method = {RequestMethod.GET})
     public String test() {
+        System.out.println("Service Availability Check!");
         return "This is a test, the service is running";
     }
 
@@ -402,6 +443,55 @@ public class FaceDetectProcessController {
         }
         // Write log:
         loggerService.writeLogFile("AttendenceInfo", attendanceQueryParams.toString(), resultList.toString());
+        return resultList;
+    }
+
+    // *** Web API for supermap worker module: Sichuan Project
+    @ApiOperation(value = "获取考勤打卡记录-四川项目", notes = "获取某人在某个时间点后的所有考勤记录，并分页提供给其他模块")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "attendanceQueryParams", value = "考勤打卡记录查询参数", dataType = "AttendanceQueryParams", paramType = "body", required = true)
+    })
+    @RequestMapping(value = {"/attendanceInfoSC"}, method = {RequestMethod.POST})
+    public List<AttendanceReturnParamsSc> getUserInfoByPageSichuan(@RequestBody AttendanceQueryParams attendanceQueryParams) {
+//        List<AttendanceReturnParamsSc> resultList = new ArrayList<>();
+//        // Start pagination:
+//        PageHelper.startPage(attendanceQueryParams.getPage(), attendanceQueryParams.getSize());
+//        // Query data:
+//        List<FaceDetectDataQuery> faceDetectDataList = faceDetectDataService.getFaceDetectInfo(attendanceQueryParams.getModifyTime());
+//        // Apply pagination, after this, original user list will be modified, leaving only the result of the pagination
+//        PageInfo<FaceDetectDataQuery> pageInfo = new PageInfo<FaceDetectDataQuery>(faceDetectDataList);
+//        // Convert result:
+//        for (FaceDetectDataQuery thisData : faceDetectDataList) {
+//            AttendanceReturnParamsSc tmpParams = new AttendanceReturnParamsSc();
+//            if (thisData.getWorkId() == null || thisData.getWorkId().size() == 0) {
+//                tmpParams.setWorkerId(0);
+//            } else {
+//                tmpParams.setWorkerId(thisData.getWorkId().get(0));
+//            }
+//            tmpParams.setProjectId(1);
+//            tmpParams.setPhoto(thisData.getPic_data());
+//            tmpParams.setRecordTime(thisData.getTime_stamp());
+//            if (thisData.getDevice_type() == null || thisData.getDevice_type().size() == 0) {
+//                continue;
+//            }
+//            tmpParams.setType((byte) (Integer.parseInt(thisData.getDevice_type().get(0))));
+//            tmpParams.setCardNo(thisData.getCard_no());
+//            String deviceSn = deviceIPMapService.getByIpAndPort(thisData.getDevice_ip(), thisData.getDevice_port()).get(0).getDescription();
+//            tmpParams.setDeviceSn(deviceSn);
+//            resultList.add(tmpParams);
+//        }
+//        // Write log:
+//        loggerService.writeLogFile("AttendenceInfoSc", attendanceQueryParams.toString(), resultList.toString());
+//        return resultList;
+        List<AttendanceReturnParamsSc> resultList = new ArrayList<>();
+        // Start pagination:
+        PageHelper.startPage(attendanceQueryParams.getPage(), attendanceQueryParams.getSize());
+        // Query data:
+        resultList = faceDetectDataService.getAttendanceInfo(attendanceQueryParams.getModifyTime());
+        // Apply pagination, after this, original user list will be modified, leaving only the result of the pagination
+        PageInfo<AttendanceReturnParamsSc> pageInfo = new PageInfo<AttendanceReturnParamsSc>(resultList);
+        // Write log:
+        loggerService.writeLogFile("AttendenceInfoSc", attendanceQueryParams.toString(), resultList.toString());
         return resultList;
     }
 

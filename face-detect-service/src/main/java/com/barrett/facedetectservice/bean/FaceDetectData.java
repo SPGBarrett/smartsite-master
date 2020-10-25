@@ -2,6 +2,8 @@ package com.barrett.facedetectservice.bean;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @program: smartsite-master
  * @description: Java bean for table face_detect_data
@@ -23,4 +25,6 @@ public class FaceDetectData {
     String device_ip;// 设备ip
     String device_port;// 设备端口
     String pic_data;// base64格式的图片
+    long create_timestamp; // 记录数据时的时间戳
+    Date create_date; // 记录数据时的时间
 }

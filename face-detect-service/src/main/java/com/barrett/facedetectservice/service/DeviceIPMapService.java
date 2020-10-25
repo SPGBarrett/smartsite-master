@@ -23,4 +23,6 @@ public interface DeviceIPMapService {
     List<String> getDeviceNoByIP(@Param("ip") String ip);
 
     List<String> getAllDeviceIP();
+
+    List<DeviceIPMap> getByIpAndPort(@Param("ip") String ip, @Param("port") String port);
 }

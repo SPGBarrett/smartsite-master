@@ -72,6 +72,8 @@ public class FaceDetectDeviceControl {
     public String PIC_SAVE_PATH;
     @Value("${face.detect.alert.log.path}")
     public String LOG_FILE_PATH;
+    @Value("${face.detect.alarm.log.path}")
+    public String LOG_FILE_PATH_ALARM;
 
     //public final String CHECK_DEVICE_INFO_URL= "http://223.84.191.228:8331/spc-device/zqs/checkdevice/1";
     //public final String PATROL_DEVICE_INFO_URL = "http://223.84.191.228:8331/spc-device/zqs/checkdevice/2";
@@ -142,7 +144,7 @@ public class FaceDetectDeviceControl {
      */
     public class FRemoteCfgCallBackFaceSet implements HCNetSDK.FRemoteConfigCallback {
         public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
-            System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
+            //System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
             switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
                     HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
@@ -321,7 +323,7 @@ public class FaceDetectDeviceControl {
      */
     public class FRemoteCfgCallBackFaceGet implements HCNetSDK.FRemoteConfigCallback {
         public void invoke(int dwType, Pointer lpBuffer, int dwBufLen, Pointer pUserData) {
-            System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
+            //System.out.println("长连接回调获取数据,NET_SDK_CALLBACK_TYPE_STATUS:" + dwType);
             switch (dwType) {
                 case 0:// NET_SDK_CALLBACK_TYPE_STATUS
                     HCNetSDK.REMOTECONFIGSTATUS_CARD struCfgStatus = new HCNetSDK.REMOTECONFIGSTATUS_CARD();
@@ -357,8 +359,6 @@ public class FaceDetectDeviceControl {
                     break;
                 case 2: //NET_SDK_CALLBACK_TYPE_DATA
                     processRecordedFaces(dwType, lpBuffer, dwBufLen, pUserData);
-
-
                     break;
                 default:
                     break;
@@ -893,10 +893,10 @@ public class FaceDetectDeviceControl {
             lAlarmHandle = hCNetSDK.NET_DVR_SetupAlarmChan_V41(lUserID, m_strAlarmInfo);
             if (lAlarmHandle.intValue() == -1) {
                 System.out.println("布防失败");
-                writeLogFiles("布防失败", LOG_FILE_PATH);
+                writeLogFiles("布防失败", LOG_FILE_PATH_ALARM);
             } else {
                 System.out.println("布防成功");
-                writeLogFiles("布防成功", LOG_FILE_PATH);
+                writeLogFiles("布防成功", LOG_FILE_PATH_ALARM);
             }
         }
     }
@@ -1095,7 +1095,7 @@ public class FaceDetectDeviceControl {
                     "刷卡次数：" + scannedNum + "   " +
                     "工号:" + strEmNo;
             // Write log:
-            System.out.println(showInfo);
+            // System.out.println(showInfo);
             // Construct ds and Save data to database:
             System.out.println("更新用户数据数据库...");
             UserData thisUserData = new UserData();
@@ -1201,6 +1201,9 @@ public class FaceDetectDeviceControl {
      */
     private void processFaceDetectData(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
         try {
+            // Get current time:
+            long dataReceivedTime = System.currentTimeMillis();
+            Date dataReceivedDate = new Date(dataReceivedTime);
             // Define variables:
             String alarmType = new String();
             String[] consoleInfo = new String[3];
@@ -1301,6 +1304,8 @@ public class FaceDetectDeviceControl {
                 thisFaceDetectData.setDevice_ip(deviceIP[0]);
                 thisFaceDetectData.setDevice_port(String.valueOf(pAlarmer.wLinkPort));
                 thisFaceDetectData.setPic_data(base64Result);
+                thisFaceDetectData.setCreate_timestamp(dataReceivedTime);
+                thisFaceDetectData.setCreate_date(dataReceivedDate);
                 faceDetectDataService.insert(thisFaceDetectData);
             }
             // Push checkin info to LED screen:
@@ -1343,9 +1348,9 @@ public class FaceDetectDeviceControl {
             }
         } catch (Exception e) {
             System.out.println(e);
-            writeLogFiles(e.toString(), LOG_FILE_PATH);
+            e.printStackTrace();
+            writeLogFiles(e.getMessage(), LOG_FILE_PATH);
         }
-
     }
 
     /**

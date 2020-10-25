@@ -1,6 +1,7 @@
 package com.barrett.facedetectservice.service;
 
 import com.barrett.facedetectservice.bean.FaceDetectData;
+import com.barrett.facedetectservice.vm.AttendanceReturnParamsSc;
 import com.barrett.facedetectservice.vm.FaceDetectDataQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 public interface FaceDetectDataService {
     int insert(FaceDetectData faceDetectData);
+
+    int insertOrUpdate(FaceDetectData faceDetectData);
 
     int update(FaceDetectData faceDetectData);
 
@@ -21,9 +24,13 @@ public interface FaceDetectDataService {
 
     List<FaceDetectData> getAllByTime(@Param("time") long time);
 
+    List<FaceDetectData> getAllByTimeSpan(@Param("start_time") long start_time, @Param("end_time") long end_time);
+
     List<FaceDetectData> getAllByTimeAndUser(@Param("time") long time, @Param("span") long span, @Param("user") String user);
 
     List<FaceDetectData> getAllCheckinByTime(@Param("time") long time);
+
+    List<FaceDetectData> getAllCheckinByTimeSpan(@Param("start_time") long start_time, @Param("end_time") long end_time);
 
     List<FaceDetectData> getAllCheckinByTimeAndDevice(@Param("time") long time);
 
@@ -34,5 +41,7 @@ public interface FaceDetectDataService {
     List<FaceDetectData> getMostRecentStatus();
 
     List<FaceDetectData> getWorkerInSiteData(@Param("device_no") String device_no);
+
+    List<AttendanceReturnParamsSc> getAttendanceInfo(@Param("time_tag") String time_tag);
 
 }

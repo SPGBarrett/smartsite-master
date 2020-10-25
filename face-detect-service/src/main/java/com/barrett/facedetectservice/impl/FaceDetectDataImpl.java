@@ -3,6 +3,7 @@ package com.barrett.facedetectservice.impl;
 import com.barrett.facedetectservice.bean.FaceDetectData;
 import com.barrett.facedetectservice.mapper.FaceDetectDataMapper;
 import com.barrett.facedetectservice.service.FaceDetectDataService;
+import com.barrett.facedetectservice.vm.AttendanceReturnParamsSc;
 import com.barrett.facedetectservice.vm.FaceDetectDataQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class FaceDetectDataImpl implements FaceDetectDataService {
     @Override
     public int insert(FaceDetectData faceDetectData) {
         return faceDetectDataMapper.insert(faceDetectData);
+    }
+
+    @Override
+    public int insertOrUpdate(FaceDetectData faceDetectData) {
+        return faceDetectDataMapper.insertOrUpdate(faceDetectData);
     }
 
     @Override
@@ -56,6 +62,11 @@ public class FaceDetectDataImpl implements FaceDetectDataService {
     }
 
     @Override
+    public List<FaceDetectData> getAllByTimeSpan(long start_time, long end_time) {
+        return null;
+    }
+
+    @Override
     public List<FaceDetectData> getAllByTimeAndUser(long time, long span, String user) {
         return faceDetectDataMapper.getAllByTimeAndUser(time, span, user);
     }
@@ -63,6 +74,11 @@ public class FaceDetectDataImpl implements FaceDetectDataService {
     @Override
     public List<FaceDetectData> getAllCheckinByTime(long time) {
         return faceDetectDataMapper.getAllCheckinByTime(time);
+    }
+
+    @Override
+    public List<FaceDetectData> getAllCheckinByTimeSpan(long start_time, long end_time) {
+        return faceDetectDataMapper.getAllCheckinByTimeSpan(start_time, end_time);
     }
 
     @Override
@@ -88,5 +104,10 @@ public class FaceDetectDataImpl implements FaceDetectDataService {
     @Override
     public List<FaceDetectData> getWorkerInSiteData(String device_no) {
         return faceDetectDataMapper.getWorkerInSiteData(device_no);
+    }
+
+    @Override
+    public List<AttendanceReturnParamsSc> getAttendanceInfo(String time_tag) {
+        return faceDetectDataMapper.getAttendanceInfo(time_tag);
     }
 }

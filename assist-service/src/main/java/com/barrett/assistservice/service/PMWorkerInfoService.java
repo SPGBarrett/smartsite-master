@@ -28,6 +28,8 @@ public interface PMWorkerInfoService {
 
     List<PMWorkerInfo> getWorkerByCompanyAndDepartment(@Param("cooperator_id") int cooperator_id, @Param("group_id") int group_id);
 
+    List<PMWorkerInfo> getAllWorkerDetailBAndFilteredByProjectGUID(@Param("cooperator_id") int cooperator_id, @Param("group_id") int group_id, @Param("project_guid") String project_guid);
+
     List<PMWorkerInfo> getWorkerByCompany(@Param("cooperator_id") int cooperator_id);
 
     List<PMWorkerInfo> getAll();

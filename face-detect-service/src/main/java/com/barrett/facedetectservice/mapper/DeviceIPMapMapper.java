@@ -34,6 +34,18 @@ public interface DeviceIPMapMapper {
     @Select({"SELECT device_no FROM device_ip_map WHERE device_ip=#{ip}"})
     List<String> getDeviceNoByIP(@Param("ip") String ip);
 
+    @Select({"SELECT device_no FROM device_ip_map WHERE device_ip=#{ip} AND device_port=#{port}"})
+    List<String> getDeviceNoByIPAndPort(@Param("ip") String ip, @Param("port") String port);
+
+    @Select({"SELECT device_no FROM device_ip_map WHERE device_ip=#{ip} AND device_port=#{port}"})
+    byte getThisDeviceNoByIPAndPort(@Param("ip") String ip, @Param("port") String port);
+
     @Select({"SELECT device_ip FROM device_ip_map"})
     List<String> getAllDeviceIP();
+
+    @Select({"SELECT * FROM device_ip_map WHERE device_ip=#{ip} AND device_port=#{port}"})
+    List<DeviceIPMap> getByIpAndPort(@Param("ip") String ip, @Param("port") String port);
+
+    @Select({"SELECT description FROM device_ip_map WHERE device_ip=#{ip} AND device_port=#{port}"})
+    String getDescByIpAndPort(@Param("ip") String ip, @Param("port") String port);
 }

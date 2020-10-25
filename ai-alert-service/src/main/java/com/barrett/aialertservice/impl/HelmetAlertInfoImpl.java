@@ -136,16 +136,16 @@ public class HelmetAlertInfoImpl implements HelmetAlertInfoService {
         // Get HelmetMsgData:
         thisData.setGuid(guidOfHelmetMsgData);
         thisData.setParent_id(guidOfAlertMsg);
-        thisData.setAlert_flag(inputData.getData().getAlertFlag());
-        thisData.setNum_of_head(inputData.getData().getNumOfHead());
+        thisData.setAlert_flag(inputData.getData().getAlert_flag());
+        thisData.setNum_of_head(inputData.getData().getAlert_num());
         thisData.setTime_stamp(inputData.getTime_stamp() * 1000);
         // Get HeadInfo:
-        for (HelmetAlertInfoInput.Heads.HeadDetail thisDetail : inputData.getData().getHeadInfo()) {
+        for (HelmetAlertInfoInput.Heads.HeadDetail thisDetail : inputData.getData().getInfo()) {
             HeadInfo tmp = new HeadInfo();
             String guidOfHeadInfo = UniqueIDGenerator.getUUIDWithoutDash();
             tmp.setGuid(guidOfHeadInfo);
             tmp.setParent_id(guidOfHelmetMsgData);
-            tmp.setNum_of_helmet(thisDetail.getNumOfHelmet());
+            tmp.setNum_of_helmet(thisDetail.getAlert_tag());
             tmp.setX(thisDetail.getX());
             tmp.setY(thisDetail.getY());
             tmp.setHeight(thisDetail.getHeight());

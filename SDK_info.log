@@ -1,0 +1,6 @@
+[net::fetchGroupIPAddress] <41> -find 192.168.155.1
+[net::fetchGroupIPAddress] <41> -find 192.168.142.1
+[net::fetchGroupIPAddress] <41> -find 192.168.4.66
+[net::MakeGroupSocket] <112> -set_option 192.168.155.1
+[net::MakeGroupSocket] <112> -set_option 192.168.142.1
+[net::MakeGroupSocket] <112> -set_option 192.168.4.66
